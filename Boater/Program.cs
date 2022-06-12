@@ -1,4 +1,5 @@
-﻿using Boater.Services;
+﻿using Boater.Models;
+using Boater.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,11 @@ namespace Boater
             //noaaFeed.Start();
 
 
-
-            Application.Run(new MainForm());
+            ViewModel initialModel = new ViewModel()
+            {
+                IsMainPanel = true
+            };
+            Application.Run(new MainForm(initialModel));
         }
     }
 }
