@@ -16,12 +16,14 @@ namespace Boater
         public MainForm()
         {
             InitializeComponent();
+
+            // Must be done after components initialize
+            Update();
         }
 
         public MainForm(ViewModel initialModel) : this()
         {
             viewModel = initialModel;
-            MainPanel.Visible = viewModel.IsMainPanel
         }
 
         private void Update(ViewModel state = null)
