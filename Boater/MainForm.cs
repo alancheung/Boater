@@ -26,10 +26,10 @@ namespace Boater
         public MainForm(ViewModel initialModel) : this()
         {
             state = initialModel;
-            Update();
+            UpdateUI();
         }
 
-        private void Update()
+        private void UpdateUI()
         {
             MainPanel.Visible = state.IsMainPanel;
             ReadingsPanel.Visible = state.IsMainPanel;
@@ -44,7 +44,7 @@ namespace Boater
         private void ChooseButton_Click(object sender, EventArgs e)
         {
             state.IsMainPanel = !state.IsMainPanel;
-            Update();
+            UpdateUI();
         }
     }
 }
