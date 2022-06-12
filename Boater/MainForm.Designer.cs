@@ -29,6 +29,7 @@ namespace Boater
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MapPanel = new System.Windows.Forms.Panel();
             this.Area1Button = new System.Windows.Forms.Button();
@@ -47,6 +48,7 @@ namespace Boater
             this.WindLabel = new System.Windows.Forms.Label();
             this.WaveLabel = new System.Windows.Forms.Label();
             this.ForecastLabel = new System.Windows.Forms.Label();
+            this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
@@ -252,6 +254,12 @@ namespace Boater
             this.ForecastLabel.Text = "Forecast";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // DateTimeTimer
+            // 
+            this.DateTimeTimer.Enabled = true;
+            this.DateTimeTimer.Interval = 1000;
+            this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +300,7 @@ namespace Boater
         private System.Windows.Forms.Label WindLabel;
         private System.Windows.Forms.Label WaveLabel;
         private System.Windows.Forms.Label ForecastLabel;
+        private System.Windows.Forms.Timer DateTimeTimer;
     }
 }
 
