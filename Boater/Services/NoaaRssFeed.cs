@@ -1,4 +1,4 @@
-﻿using Boater.Attributes;
+﻿using Boater.Common.Attributes;
 using Boater.Models;
 using System;
 using System.Collections.Generic;

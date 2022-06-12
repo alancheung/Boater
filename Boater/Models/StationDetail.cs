@@ -1,5 +1,5 @@
-﻿using Boater.Attributes;
-using Boater.Common;
+﻿using Boater.Common;
+using Boater.Common.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

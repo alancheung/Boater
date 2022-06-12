@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Boater.Attributes
+namespace Boater.Common.Attributes
 {
     /// <summary>
     /// Used on class properties and holds a regex that can find the data within a raw input.
