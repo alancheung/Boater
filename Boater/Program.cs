@@ -26,8 +26,8 @@ namespace Boater
                 new Tuple<string, string>("44063", "Station 44063 - Annapolis, MD"),
             };
 
-            NoaaRssFeed noaaFeed = new NoaaRssFeed(stations);
-            noaaFeed.Start();
+            //NoaaRssFeed noaaFeed = new NoaaRssFeed(stations);
+            //noaaFeed.Start();
 
 
 
