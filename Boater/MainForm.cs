@@ -9,7 +9,7 @@ namespace Boater
         /// <summary>
         /// The object is readonly but the fields in the object are not.
         /// </summary>
-        private readonly ViewModel viewModel;
+        private readonly ViewModel state;
 
         private static readonly string DateTimeOffsetFormat = $"MM/dd/yyyy{Environment.NewLine}hh:mm:ss";
 
@@ -18,16 +18,19 @@ namespace Boater
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="initialModel"></param>
+        /// <remarks>The this() constructor runs first then this constructor.</remarks>
         public MainForm(ViewModel initialModel) : this()
         {
-            viewModel = initialModel;
+            state = initialModel;
             Update();
         }
 
-        private void Update(ViewModel state = null)
+        private void Update()
         {
-            state = state ?? viewModel;
-
             MainPanel.Visible = state.IsMainPanel;
             ReadingsPanel.Visible = state.IsMainPanel;
             MapPanel.Visible = state.IsMapPanel;
@@ -36,6 +39,12 @@ namespace Boater
         private void DateTimeTimer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Text = DateTimeOffset.Now.ToString(DateTimeOffsetFormat);
+        }
+
+        private void ChooseButton_Click(object sender, EventArgs e)
+        {
+            state.IsMainPanel = !state.IsMainPanel;
+            Update();
         }
     }
 }

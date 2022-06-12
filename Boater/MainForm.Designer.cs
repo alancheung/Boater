@@ -150,6 +150,7 @@ namespace Boater
             this.ChooseButton.TabIndex = 2;
             this.ChooseButton.Text = "Choose";
             this.ChooseButton.UseVisualStyleBackColor = false;
+            this.ChooseButton.Click += new System.EventHandler(this.ChooseButton_Click);
             // 
             // RightPanel
             // 

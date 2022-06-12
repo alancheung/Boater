@@ -4784,9 +4784,6 @@
         4UzuXDwm5P8PZ/x+YGuzTLYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="OtherLabel.Text" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
-  </data>
   <data name="UpdateTextBox.Text" xml:space="preserve">
     <value>ANZ532-130800-
 Chesapeake Bay from Sandy Point to North Beach-
@@ -4823,6 +4820,9 @@ S winds 10 to 15 kt...becoming SW after midnight. Waves 2 ft.
 A chance of showers. A chance of tstms. 
 
 Winds and waves higher and visibilities lower in and near tstms.</value>
+  </data>
+  <data name="OtherLabel.Text" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</value>
   </data>
   <metadata name="DateTimeTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
