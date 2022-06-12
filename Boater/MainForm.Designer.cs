@@ -63,7 +63,8 @@ namespace Boater
             this.MapPanel.Location = new System.Drawing.Point(0, 0);
             this.MapPanel.Name = "MapPanel";
             this.MapPanel.Size = new System.Drawing.Size(640, 480);
-            this.MapPanel.TabIndex = 0;
+            this.MapPanel.TabIndex = 1;
+            this.MapPanel.Visible = false;
             // 
             // Area1Button
             // 
@@ -73,7 +74,7 @@ namespace Boater
             this.Area1Button.Location = new System.Drawing.Point(0, 0);
             this.Area1Button.Name = "Area1Button";
             this.Area1Button.Size = new System.Drawing.Size(640, 160);
-            this.Area1Button.TabIndex = 1;
+            this.Area1Button.TabIndex = 0;
             this.Area1Button.Text = "Baltimore";
             this.Area1Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area1Button.UseVisualStyleBackColor = false;
@@ -87,7 +88,7 @@ namespace Boater
             this.Area2Button.Location = new System.Drawing.Point(0, 160);
             this.Area2Button.Name = "Area2Button";
             this.Area2Button.Size = new System.Drawing.Size(640, 160);
-            this.Area2Button.TabIndex = 2;
+            this.Area2Button.TabIndex = 1;
             this.Area2Button.Text = "Sandy Point";
             this.Area2Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area2Button.UseVisualStyleBackColor = false;
@@ -100,7 +101,7 @@ namespace Boater
             this.Area3Button.Location = new System.Drawing.Point(0, 320);
             this.Area3Button.Name = "Area3Button";
             this.Area3Button.Size = new System.Drawing.Size(640, 160);
-            this.Area3Button.TabIndex = 3;
+            this.Area3Button.TabIndex = 2;
             this.Area3Button.Text = "North Beach";
             this.Area3Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area3Button.UseVisualStyleBackColor = false;
@@ -124,7 +125,7 @@ namespace Boater
             this.LeftPanel.Location = new System.Drawing.Point(0, 0);
             this.LeftPanel.Name = "LeftPanel";
             this.LeftPanel.Size = new System.Drawing.Size(160, 480);
-            this.LeftPanel.TabIndex = 1;
+            this.LeftPanel.TabIndex = 0;
             // 
             // UpdateTextBox
             // 
@@ -156,7 +157,7 @@ namespace Boater
             this.RightPanel.Location = new System.Drawing.Point(160, 0);
             this.RightPanel.Name = "RightPanel";
             this.RightPanel.Size = new System.Drawing.Size(640, 480);
-            this.RightPanel.TabIndex = 0;
+            this.RightPanel.TabIndex = 1;
             // 
             // StationLabel
             // 
