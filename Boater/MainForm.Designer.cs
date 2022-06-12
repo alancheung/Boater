@@ -42,10 +42,16 @@ namespace Boater
             this.StationLabel = new System.Windows.Forms.Label();
             this.OtherLabel = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
+            this.ReadingsPanel = new System.Windows.Forms.Panel();
+            this.TemperatureLabel = new System.Windows.Forms.Label();
+            this.WindLabel = new System.Windows.Forms.Label();
+            this.WaveLabel = new System.Windows.Forms.Label();
+            this.ForecastLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             this.RightPanel.SuspendLayout();
+            this.ReadingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MapPanel
@@ -103,6 +109,7 @@ namespace Boater
             // 
             this.MainPanel.Controls.Add(this.StationLabel);
             this.MainPanel.Controls.Add(this.OtherLabel);
+            this.MainPanel.Controls.Add(this.ReadingsPanel);
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(640, 480);
@@ -133,7 +140,7 @@ namespace Boater
             // ChooseButton
             // 
             this.ChooseButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.ChooseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChooseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChooseButton.Location = new System.Drawing.Point(0, 410);
             this.ChooseButton.Margin = new System.Windows.Forms.Padding(0);
             this.ChooseButton.Name = "ChooseButton";
@@ -158,7 +165,7 @@ namespace Boater
             this.StationLabel.Location = new System.Drawing.Point(0, 0);
             this.StationLabel.Name = "StationLabel";
             this.StationLabel.Size = new System.Drawing.Size(640, 70);
-            this.StationLabel.TabIndex = 2;
+            this.StationLabel.TabIndex = 0;
             this.StationLabel.Text = "Boating Station: Father\'s Day 2022";
             this.StationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -168,7 +175,7 @@ namespace Boater
             this.OtherLabel.Location = new System.Drawing.Point(0, 410);
             this.OtherLabel.Name = "OtherLabel";
             this.OtherLabel.Size = new System.Drawing.Size(640, 70);
-            this.OtherLabel.TabIndex = 3;
+            this.OtherLabel.TabIndex = 1;
             this.OtherLabel.Text = resources.GetString("OtherLabel.Text");
             this.OtherLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -176,7 +183,7 @@ namespace Boater
             // 
             this.TimeLabel.BackColor = System.Drawing.Color.White;
             this.TimeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimeLabel.Location = new System.Drawing.Point(0, 0);
             this.TimeLabel.Margin = new System.Windows.Forms.Padding(0);
             this.TimeLabel.Name = "TimeLabel";
@@ -184,6 +191,66 @@ namespace Boater
             this.TimeLabel.TabIndex = 0;
             this.TimeLabel.Text = "06/12/2022\r\n00:00:00";
             this.TimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ReadingsPanel
+            // 
+            this.ReadingsPanel.Controls.Add(this.TemperatureLabel);
+            this.ReadingsPanel.Controls.Add(this.WindLabel);
+            this.ReadingsPanel.Controls.Add(this.WaveLabel);
+            this.ReadingsPanel.Controls.Add(this.ForecastLabel);
+            this.ReadingsPanel.Location = new System.Drawing.Point(0, 70);
+            this.ReadingsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ReadingsPanel.Name = "ReadingsPanel";
+            this.ReadingsPanel.Size = new System.Drawing.Size(640, 340);
+            this.ReadingsPanel.TabIndex = 2;
+            // 
+            // TemperatureLabel
+            // 
+            this.TemperatureLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TemperatureLabel.Location = new System.Drawing.Point(0, 0);
+            this.TemperatureLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.TemperatureLabel.Name = "TemperatureLabel";
+            this.TemperatureLabel.Size = new System.Drawing.Size(320, 170);
+            this.TemperatureLabel.TabIndex = 0;
+            this.TemperatureLabel.Text = "Temperature";
+            this.TemperatureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // WindLabel
+            // 
+            this.WindLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindLabel.Location = new System.Drawing.Point(320, 0);
+            this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.WindLabel.Name = "WindLabel";
+            this.WindLabel.Size = new System.Drawing.Size(320, 170);
+            this.WindLabel.TabIndex = 1;
+            this.WindLabel.Text = "Wind Speed\r\nDirection";
+            this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // WaveLabel
+            // 
+            this.WaveLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WaveLabel.Location = new System.Drawing.Point(0, 170);
+            this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.WaveLabel.Name = "WaveLabel";
+            this.WaveLabel.Size = new System.Drawing.Size(320, 170);
+            this.WaveLabel.TabIndex = 2;
+            this.WaveLabel.Text = "Wave Height";
+            this.WaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ForecastLabel
+            // 
+            this.ForecastLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForecastLabel.Location = new System.Drawing.Point(320, 170);
+            this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.ForecastLabel.Name = "ForecastLabel";
+            this.ForecastLabel.Size = new System.Drawing.Size(320, 170);
+            this.ForecastLabel.TabIndex = 3;
+            this.ForecastLabel.Text = "Forecast";
+            this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -201,6 +268,7 @@ namespace Boater
             this.LeftPanel.ResumeLayout(false);
             this.LeftPanel.PerformLayout();
             this.RightPanel.ResumeLayout(false);
+            this.ReadingsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -219,6 +287,11 @@ namespace Boater
         private System.Windows.Forms.Label StationLabel;
         private System.Windows.Forms.Label OtherLabel;
         private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.Panel ReadingsPanel;
+        private System.Windows.Forms.Label TemperatureLabel;
+        private System.Windows.Forms.Label WindLabel;
+        private System.Windows.Forms.Label WaveLabel;
+        private System.Windows.Forms.Label ForecastLabel;
     }
 }
 
