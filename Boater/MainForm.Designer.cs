@@ -115,7 +115,6 @@ namespace Boater
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(640, 480);
             this.MainPanel.TabIndex = 0;
-            this.MainPanel.Visible = false;
             // 
             // LeftPanel
             // 
