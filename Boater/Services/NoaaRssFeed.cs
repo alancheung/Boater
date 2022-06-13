@@ -18,7 +18,7 @@ namespace Boater.Services
 
         private Timer Timer;
 
-        public Dictionary<string, StationDetail> Stations { get; set; }
+        public Dictionary<string, StationSource> Stations { get; set; }
 
         /// <summary>
         /// Event fired when the forecasted weather has been updated.
@@ -73,17 +73,17 @@ namespace Boater.Services
 
         public NoaaRssFeed(List<Tuple<string, string>> registeredStations, int timerInterval = (30 * 60 * 1000))
         {
-            Stations = new Dictionary<string, StationDetail>();
+            Stations = new Dictionary<string, StationSource>();
             foreach (Tuple<string, string> stationNameDescription in registeredStations)
             {
-                Stations.Add(stationNameDescription.Item1, new StationDetail(stationNameDescription.Item2));
+                Stations.Add(stationNameDescription.Item1, new StationSource(stationNameDescription.Item2));
             }
 
-            Type thisType = typeof(StationDetail);
+            Type thisType = typeof(StationSource);
             foreach (PropertyInfo prop in thisType.GetProperties().Where(p => p.IsDefined(typeof(RegexSearchAttribute))))
             {
                 RegexSearchAttribute attribute = (RegexSearchAttribute)prop.GetCustomAttribute(typeof(RegexSearchAttribute), inherit: false);
-                StationDetail.SettableProperties.Add(new Tuple<PropertyInfo, Regex>(prop, new Regex(attribute.Regex)));
+                StationSource.SettableProperties.Add(new Tuple<PropertyInfo, Regex>(prop, new Regex(attribute.Regex)));
             }
 
             Timer = new Timer();
@@ -94,7 +94,7 @@ namespace Boater.Services
         private void Timer_Tick(object sender, EventArgs e)
         {
 #if DEBUG
-            foreach (KeyValuePair<string, StationDetail> station in Stations)
+            foreach (KeyValuePair<string, StationSource> station in Stations)
             {
                 station.Value.Update(DEBUG_DATA[station.Key]);
             }

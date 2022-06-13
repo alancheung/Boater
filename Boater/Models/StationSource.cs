@@ -12,7 +12,7 @@ namespace Boater.Models
     /// <summary>
     /// Details about a specific NOAA station. All properties are expected to be nullable.
     /// </summary>
-    public class StationDetail
+    public class StationSource
     {
         public static List<Tuple<PropertyInfo, Regex>> SettableProperties = new List<Tuple<PropertyInfo, Regex>>();
 
@@ -63,7 +63,7 @@ namespace Boater.Models
         /// Constructor
         /// </summary>
         /// <param name="station"><see cref="Title"/></param>
-        public StationDetail(string station)
+        public StationSource(string station)
         {
             Title = station;
         }

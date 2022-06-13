@@ -56,7 +56,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\StationDetail.cs" />
+    <Compile Include="MainFormUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\BoatingArea.cs" />
+    <Compile Include="Models\StationSource.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

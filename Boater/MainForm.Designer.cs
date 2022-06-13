@@ -36,24 +36,24 @@ namespace Boater
             this.Area2Button = new System.Windows.Forms.Button();
             this.Area3Button = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.LeftPanel = new System.Windows.Forms.Panel();
-            this.UpdateTextBox = new System.Windows.Forms.TextBox();
-            this.ChooseButton = new System.Windows.Forms.Button();
-            this.RightPanel = new System.Windows.Forms.Panel();
             this.StationLabel = new System.Windows.Forms.Label();
             this.OtherLabel = new System.Windows.Forms.Label();
-            this.TimeLabel = new System.Windows.Forms.Label();
             this.ReadingsPanel = new System.Windows.Forms.Panel();
             this.TemperatureLabel = new System.Windows.Forms.Label();
             this.WindLabel = new System.Windows.Forms.Label();
             this.WaveLabel = new System.Windows.Forms.Label();
             this.ForecastLabel = new System.Windows.Forms.Label();
+            this.LeftPanel = new System.Windows.Forms.Panel();
+            this.TimeLabel = new System.Windows.Forms.Label();
+            this.UpdateTextBox = new System.Windows.Forms.TextBox();
+            this.ChooseButton = new System.Windows.Forms.Button();
+            this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
+            this.ReadingsPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             this.RightPanel.SuspendLayout();
-            this.ReadingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MapPanel
@@ -80,6 +80,7 @@ namespace Boater
             this.Area1Button.Text = "Baltimore";
             this.Area1Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area1Button.UseVisualStyleBackColor = false;
+            this.Area1Button.Click += new System.EventHandler(this.AreaButton_Click);
             // 
             // Area2Button
             // 
@@ -94,6 +95,7 @@ namespace Boater
             this.Area2Button.Text = "Sandy Point";
             this.Area2Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area2Button.UseVisualStyleBackColor = false;
+            this.Area2Button.Click += new System.EventHandler(this.AreaButton_Click);
             // 
             // Area3Button
             // 
@@ -107,6 +109,7 @@ namespace Boater
             this.Area3Button.Text = "North Beach";
             this.Area3Button.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Area3Button.UseVisualStyleBackColor = false;
+            this.Area3Button.Click += new System.EventHandler(this.AreaButton_Click);
             // 
             // MainPanel
             // 
@@ -117,49 +120,6 @@ namespace Boater
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(640, 480);
             this.MainPanel.TabIndex = 0;
-            // 
-            // LeftPanel
-            // 
-            this.LeftPanel.Controls.Add(this.TimeLabel);
-            this.LeftPanel.Controls.Add(this.UpdateTextBox);
-            this.LeftPanel.Controls.Add(this.ChooseButton);
-            this.LeftPanel.Location = new System.Drawing.Point(0, 0);
-            this.LeftPanel.Name = "LeftPanel";
-            this.LeftPanel.Size = new System.Drawing.Size(160, 480);
-            this.LeftPanel.TabIndex = 0;
-            // 
-            // UpdateTextBox
-            // 
-            this.UpdateTextBox.Location = new System.Drawing.Point(0, 70);
-            this.UpdateTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.UpdateTextBox.Multiline = true;
-            this.UpdateTextBox.Name = "UpdateTextBox";
-            this.UpdateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.UpdateTextBox.Size = new System.Drawing.Size(160, 340);
-            this.UpdateTextBox.TabIndex = 1;
-            this.UpdateTextBox.Text = resources.GetString("UpdateTextBox.Text");
-            // 
-            // ChooseButton
-            // 
-            this.ChooseButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.ChooseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChooseButton.Location = new System.Drawing.Point(0, 410);
-            this.ChooseButton.Margin = new System.Windows.Forms.Padding(0);
-            this.ChooseButton.Name = "ChooseButton";
-            this.ChooseButton.Size = new System.Drawing.Size(160, 70);
-            this.ChooseButton.TabIndex = 2;
-            this.ChooseButton.Text = "Choose";
-            this.ChooseButton.UseVisualStyleBackColor = false;
-            this.ChooseButton.Click += new System.EventHandler(this.ChooseButton_Click);
-            // 
-            // RightPanel
-            // 
-            this.RightPanel.Controls.Add(this.MainPanel);
-            this.RightPanel.Controls.Add(this.MapPanel);
-            this.RightPanel.Location = new System.Drawing.Point(160, 0);
-            this.RightPanel.Name = "RightPanel";
-            this.RightPanel.Size = new System.Drawing.Size(640, 480);
-            this.RightPanel.TabIndex = 1;
             // 
             // StationLabel
             // 
@@ -181,19 +141,6 @@ namespace Boater
             this.OtherLabel.TabIndex = 1;
             this.OtherLabel.Text = resources.GetString("OtherLabel.Text");
             this.OtherLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TimeLabel
-            // 
-            this.TimeLabel.BackColor = System.Drawing.Color.White;
-            this.TimeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeLabel.Location = new System.Drawing.Point(0, 0);
-            this.TimeLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(160, 70);
-            this.TimeLabel.TabIndex = 0;
-            this.TimeLabel.Text = "06/12/2022\r\n00:00:00";
-            this.TimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ReadingsPanel
             // 
@@ -255,6 +202,62 @@ namespace Boater
             this.ForecastLabel.Text = "Forecast";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // LeftPanel
+            // 
+            this.LeftPanel.Controls.Add(this.TimeLabel);
+            this.LeftPanel.Controls.Add(this.UpdateTextBox);
+            this.LeftPanel.Controls.Add(this.ChooseButton);
+            this.LeftPanel.Location = new System.Drawing.Point(0, 0);
+            this.LeftPanel.Name = "LeftPanel";
+            this.LeftPanel.Size = new System.Drawing.Size(160, 480);
+            this.LeftPanel.TabIndex = 0;
+            // 
+            // TimeLabel
+            // 
+            this.TimeLabel.BackColor = System.Drawing.Color.White;
+            this.TimeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeLabel.Location = new System.Drawing.Point(0, 0);
+            this.TimeLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(160, 70);
+            this.TimeLabel.TabIndex = 0;
+            this.TimeLabel.Text = "06/12/2022\r\n00:00:00";
+            this.TimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // UpdateTextBox
+            // 
+            this.UpdateTextBox.Location = new System.Drawing.Point(0, 70);
+            this.UpdateTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.UpdateTextBox.Multiline = true;
+            this.UpdateTextBox.Name = "UpdateTextBox";
+            this.UpdateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.UpdateTextBox.Size = new System.Drawing.Size(160, 340);
+            this.UpdateTextBox.TabIndex = 1;
+            this.UpdateTextBox.Text = resources.GetString("UpdateTextBox.Text");
+            // 
+            // ChooseButton
+            // 
+            this.ChooseButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.ChooseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChooseButton.Location = new System.Drawing.Point(0, 410);
+            this.ChooseButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ChooseButton.Name = "ChooseButton";
+            this.ChooseButton.Size = new System.Drawing.Size(160, 70);
+            this.ChooseButton.TabIndex = 2;
+            this.ChooseButton.Text = "Choose";
+            this.ChooseButton.UseVisualStyleBackColor = false;
+            this.ChooseButton.Click += new System.EventHandler(this.ChooseButton_Click);
+            // 
+            // RightPanel
+            // 
+            this.RightPanel.Controls.Add(this.MapPanel);
+            this.RightPanel.Controls.Add(this.MainPanel);
+            this.RightPanel.Location = new System.Drawing.Point(160, 0);
+            this.RightPanel.Name = "RightPanel";
+            this.RightPanel.Size = new System.Drawing.Size(640, 480);
+            this.RightPanel.TabIndex = 1;
+            // 
             // DateTimeTimer
             // 
             this.DateTimeTimer.Enabled = true;
@@ -274,10 +277,10 @@ namespace Boater
             this.Text = "Main";
             this.MapPanel.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
+            this.ReadingsPanel.ResumeLayout(false);
             this.LeftPanel.ResumeLayout(false);
             this.LeftPanel.PerformLayout();
             this.RightPanel.ResumeLayout(false);
-            this.ReadingsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
