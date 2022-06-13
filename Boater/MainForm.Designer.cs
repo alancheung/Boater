@@ -227,6 +227,7 @@ namespace Boater
             // 
             // UpdateTextBox
             // 
+            this.UpdateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpdateTextBox.Location = new System.Drawing.Point(0, 70);
             this.UpdateTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.UpdateTextBox.Multiline = true;
