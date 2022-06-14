@@ -14,13 +14,39 @@ namespace Boater.Models
     /// </summary>
     public class StationSource
     {
-        public static List<Tuple<PropertyInfo, Regex>> SettableProperties = new List<Tuple<PropertyInfo, Regex>>();
+        private static List<Tuple<PropertyInfo, Regex>> _settableProperties = new List<Tuple<PropertyInfo, Regex>>();
+        public static List<Tuple<PropertyInfo, Regex>> SettableProperties
+        {
+            get
+            {
+                if (!_settableProperties.Any())
+                {
+                    Type thisType = typeof(StationSource);
+                    foreach (PropertyInfo prop in thisType.GetProperties().Where(p => p.IsDefined(typeof(RegexSearchAttribute))))
+                    {
+                        RegexSearchAttribute attribute = (RegexSearchAttribute)prop.GetCustomAttribute(typeof(RegexSearchAttribute), inherit: false);
+                        StationSource._settableProperties.Add(new Tuple<PropertyInfo, Regex>(prop, new Regex(attribute.Regex)));
+                    }
+                }
+
+                return _settableProperties;
+            }
+        }
 
         [RegexSearch(@"<strong>(.*)E[SD]?T</strong><br />")]
         public DateTimeOffset Time { get; set; }
 
-        [RegexSearch(@"<strong>Location:</strong> (.*)<br />")]
+        /// <summary>
+        /// The coordinates of the source location
+        /// </summary>
+        [RegexSearch(@"<strong>Location:</strong> (\d*.\d*N \d*.\d*W) or \d* nautical miles \w* of search location of .*<br />")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// The distance in nautical miles from the search source.
+        /// </summary>
+        [RegexSearch(@"<strong>Location:</strong> .* or (\d*) nautical miles \w* of search location of .*<br />")]
+        public int? DistanceFromSource { get; set; }
 
         [RegexSearch(@"<strong>Wind Direction:</strong> (..?) \(\d*&#176;\)<br />")]
         public string WindDirection { get; set; }
@@ -74,6 +100,7 @@ namespace Boater.Models
         /// <param name="raw"></param>
         public void Update(string raw)
         {
+            Raw = raw;
             foreach (Tuple<PropertyInfo, Regex> property in SettableProperties)
             {
                 PropertyInfo info = property.Item1;
