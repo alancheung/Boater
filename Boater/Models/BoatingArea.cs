@@ -31,7 +31,8 @@ namespace Boater.Models
         /// <summary>
         /// The data from each station
         /// </summary>
+        /// <remarks>Property not constructed from JSON so set default now.</remarks>
         [JsonIgnore]
-        public List<StationSource> StationData { get; private set; }
+        public List<StationSource> StationData { get; private set; } = new List<StationSource>();
     }
 }

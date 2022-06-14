@@ -16,10 +16,9 @@ namespace Boater.Services
         public void GetLatestData(BoatingArea area)
         {
             SyndicationFeed feed = null;
-            List<StationSource> stationData = new List<StationSource>();
             try
             {
-                using (XmlReader reader = XmlReader.Create(Uri.EscapeDataString(area.RssUrl)))
+                using (XmlReader reader = XmlReader.Create(area.RssUrl))
                 {
                     feed = SyndicationFeed.Load(reader);
                 }
@@ -43,7 +42,7 @@ namespace Boater.Services
                     {
                         break;
                     }
-                    stationData.Add(source);
+                    area.StationData.Add(source);
                 }
             }
             catch (Exception ex)

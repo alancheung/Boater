@@ -53,7 +53,6 @@ namespace Boater
         {
             if (sender is Button)
             {
-                bool validSelection = false;
                 Button senderButton = (Button)sender;
                 if (senderButton.Name == Area1Button.Name)
                 {
@@ -68,10 +67,10 @@ namespace Boater
                     State.ActiveArea = BoatingAreas.ElementAtOrDefault(2);
                 }
 
-                if (validSelection)
+                if (State.ActiveArea != null)
                 {
                     NOAA.GetLatestData(State.ActiveArea);
-                    SwapAndUpdatePanels();
+                    AreaChanged(State.ActiveArea);
                 }
                 else
                 {

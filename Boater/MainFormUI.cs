@@ -1,4 +1,5 @@
 ﻿using Boater.Models;
+using System.Linq;
 
 namespace Boater
 {
@@ -15,6 +16,42 @@ namespace Boater
         {
             State.SwapRightPanel();
             UpdateUI();
+        }
+
+        private void AreaChanged(BoatingArea area)
+        {
+            StationLabel.Text = area.Title;
+
+            double? temp = area.StationData.FirstOrDefault(d => d.AirTemperature.HasValue)?.AirTemperature;
+            if (temp.HasValue)
+            {
+                TemperatureLabel.Text = $"Temperature\n{temp}";
+            }
+            else
+            {
+                TemperatureLabel.Text = "No data...";
+            }
+
+            double? windSpeed = area.StationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
+            if (windSpeed.HasValue)
+            {
+                WindLabel.Text = $"Wind\n{windSpeed}";
+            }
+            else
+            {
+                WindLabel.Text = "No data...";
+            }
+
+            double? waveHeight = area.StationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
+            if (waveHeight.HasValue)
+            {
+                WaveLabel.Text = $"Wave Height\n{waveHeight}";
+            }
+            else
+            {
+                WaveLabel.Text = "No data...";
+            }
+            SwapAndUpdatePanels();
         }
     }
 }
