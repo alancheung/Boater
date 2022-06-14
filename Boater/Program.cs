@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Boater
@@ -30,8 +31,10 @@ namespace Boater
             Console.WriteLine($"Boating area config file path: '{boatingAreaConfigPath}'");
             string rawJson = File.ReadAllText(boatingAreaConfigPath);
             List<BoatingArea> boatingAreas = JsonConvert.DeserializeObject<List<BoatingArea>>(rawJson);
-            
-            Application.Run(new MainForm(initialModel, noaaFeed, boatingAreas));
+
+            string defaultBoatingAreaTitle = ConfigurationManager.AppSettings["DefaultBoatingAreaTitle"];
+
+            Application.Run(new MainForm(initialModel, noaaFeed, boatingAreas, defaultBoatingAreaTitle));
         }
     }
 }

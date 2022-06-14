@@ -1,4 +1,5 @@
 ﻿using Boater.Models;
+using System;
 using System.Linq;
 
 namespace Boater
@@ -16,6 +17,21 @@ namespace Boater
         {
             State.SwapRightPanel();
             UpdateUI();
+        }
+
+        private void SetActiveArea(BoatingArea area)
+        {
+            if (area != null)
+            {
+                State.ActiveArea = area;
+
+                NOAA.GetLatestData(State.ActiveArea);
+                AreaChanged(State.ActiveArea);
+            }
+            else
+            {
+                Console.WriteLine($"New area selection was null! Did not set a new area!");
+            }
         }
 
         private void AreaChanged(BoatingArea area)
@@ -51,7 +67,6 @@ namespace Boater
             {
                 WaveLabel.Text = "No data...";
             }
-            SwapAndUpdatePanels();
         }
     }
 }

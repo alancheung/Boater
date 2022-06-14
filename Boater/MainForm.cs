@@ -30,13 +30,21 @@ namespace Boater
         /// Constructor
         /// </summary>
         /// <param name="initialModel">The initial state of the UI to display.</param>
+        /// <param name="noaaSource">A helper preconstructed to retrieve data from NOAA</param>
+        /// <param name="boatingAreas">A list of selectable <see cref="BoatingArea"/></param>
+        /// <param name="initialArea">The initial selection from <paramref name="boatingAreas"/></param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
-        public MainForm(ViewModel initialModel, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas) : this()
+        public MainForm(ViewModel initialModel, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas, string initialAreaTitle = null) : this()
         {
             State = initialModel;
             NOAA = noaaSource;
             BoatingAreas = boatingAreas;
             UpdateUI();
+
+            if (!string.IsNullOrWhiteSpace(initialAreaTitle))
+            {
+                SetActiveArea(boatingAreas.SingleOrDefault(a => a.Title == initialAreaTitle));
+            }
         }
 
         private void DateTimeTimer_Tick(object sender, EventArgs e)
@@ -54,28 +62,23 @@ namespace Boater
             if (sender is Button)
             {
                 Button senderButton = (Button)sender;
+
+                BoatingArea newArea = null;
                 if (senderButton.Name == Area1Button.Name)
                 {
-                    State.ActiveArea = BoatingAreas.ElementAtOrDefault(0);
+                    newArea = BoatingAreas.ElementAtOrDefault(0);
                 }
                 else if (senderButton.Name == Area2Button.Name)
                 {
-                    State.ActiveArea = BoatingAreas.ElementAtOrDefault(1);
+                    newArea = BoatingAreas.ElementAtOrDefault(1);
                 }
                 else if (senderButton.Name == Area3Button.Name)
                 {
-                    State.ActiveArea = BoatingAreas.ElementAtOrDefault(2);
+                    newArea = BoatingAreas.ElementAtOrDefault(2);
                 }
 
-                if (State.ActiveArea != null)
-                {
-                    NOAA.GetLatestData(State.ActiveArea);
-                    AreaChanged(State.ActiveArea);
-                }
-                else
-                {
-                    Console.WriteLine($"{senderButton.Name} was not a recognized area!");
-                }
+                SetActiveArea(newArea);
+                SwapAndUpdatePanels();
             }
             else
             {
