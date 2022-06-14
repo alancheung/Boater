@@ -46,7 +46,7 @@ namespace Boater.Models
         /// The distance in nautical miles from the search source.
         /// </summary>
         [RegexSearch(@"<strong>Location:</strong> .* or (\d*) nautical miles \w* of search location of .*<br />")]
-        public int? DistanceFromSource { get; set; }
+        public int? DistanceFromOrigin { get; set; }
 
         [RegexSearch(@"<strong>Wind Direction:</strong> (..?) \(\d*&#176;\)<br />")]
         public string WindDirection { get; set; }

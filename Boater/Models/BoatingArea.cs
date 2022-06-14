@@ -32,6 +32,6 @@ namespace Boater.Models
         /// The data from each station
         /// </summary>
         [JsonIgnore]
-        public List<StationSource> Stations { get; private set; }
+        public List<StationSource> StationData { get; private set; }
     }
 }
