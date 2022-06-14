@@ -29,14 +29,14 @@ namespace Boater.Services
         internal Dictionary<string, string> DEBUG_DATA { get; set; } = new Dictionary<string, string>()
         {
             { "bltm2", @"
-        <strong>May 30, 2022 2:18 pm EDT</strong><br />
-        <strong>Location:</strong> 39.267N 76.579W<br />
-        <strong>Wind Direction:</strong> S (170&#176;)<br />
-        <strong>Wind Speed:</strong> 6.0 knots<br />
-        <strong>Wind Gust:</strong> 8.0 knots<br />
-        <strong>Atmospheric Pressure:</strong> 30.06 in (1018.0 mb)<br />
-        <strong>Air Temperature:</strong> 83.5&#176;F (28.6&#176;C)<br />
-        <strong>Water Temperature:</strong> 72.7&#176;F (22.6&#176;C)<br />
+        <strong>June 13, 2022 7:48 pm EST</strong><br />
+        <strong>Location:</strong> 39.267N 76.579W or 1 nautical miles SSW of search location of 39.28N 76.57W.<br />
+        <strong>Wind Direction:</strong> WSW (250&#176;)<br />
+        <strong>Wind Speed:</strong> 2 knots<br />
+        <strong>Wind Gust:</strong> 3 knots<br />
+        <strong>Atmospheric Pressure:</strong> 29.88 in (1012.0 mb)<br />
+        <strong>Air Temperature:</strong> 84&#176;F (28.9&#176;C)<br />
+        <strong>Water Temperature:</strong> 76&#176;F (24.3&#176;C)<br />
       " },
             { "fsnm2", @"
         <strong>May 30, 2022 2:30 pm EDT</strong><br />
