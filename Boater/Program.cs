@@ -24,7 +24,7 @@ namespace Boater
             {
                 IsMainPanel = true
             };
-            NoaaRssFeed noaaFeed = new NoaaRssFeed();
+            NoaaRssClient noaaFeed = new NoaaRssClient();
 
             string boatingAreaConfigPath = ConfigurationManager.AppSettings["BoatingAreaConfigPath"];
             Console.WriteLine($"Boating area config file path: '{boatingAreaConfigPath}'");

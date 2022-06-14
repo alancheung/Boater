@@ -1,20 +1,36 @@
 ﻿using Boater.Models;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
 namespace Boater.Services
 {
-    public class NoaaRssFeed
+    public class NoaaRssClient
     {
-        public NoaaRssFeed()
-        {
+        private readonly TimeSpan MaxMinsBeforeUpdateRequired;
 
+        public NoaaRssClient()
+        {
+            MaxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings[nameof(MaxMinsBeforeUpdateRequired)]));
         }
 
-        public void GetLatestData(BoatingArea area)
+        /// <summary>
+        /// Get the latest NOAA data for <paramref name="area"/> within the <paramref name="area"/>'s <see cref="BoatingArea.MaxRange"/>.
+        /// </summary>
+        /// <param name="area">The <see cref="BoatingArea"/> to update</param>
+        /// <returns>True if <see cref="BoatingArea.StationData"/> collection updated, false otherwise</returns>
+        public bool GetLatestData(BoatingArea area)
         {
+            // Read out to only hit dependent property once.
+            DateTimeOffset lastUpdateTime = area.LastUpdateTime;
+            if (lastUpdateTime > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
+            {
+                // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
+                Console.WriteLine($"No update required. Last update for area {area.Title} was {lastUpdateTime}");
+                return false;
+            }
+
             SyndicationFeed feed = null;
             try
             {
@@ -27,6 +43,7 @@ namespace Boater.Services
             {
                 Console.WriteLine($"EXCEPTION: {area.Title} encountered an error reading XML data from NOAA at {DateTimeOffset.Now}.{Environment.NewLine}" +
                     $"{ex}");
+                return false;
             }
 
             try
@@ -44,11 +61,14 @@ namespace Boater.Services
                     }
                     area.StationData.Add(source);
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"EXCEPTION: {area.Title} encountered an error parsing RSS data at {DateTimeOffset.Now}.{Environment.NewLine}" +
                     $"{ex}");
+                return false;
             }
         }
     }

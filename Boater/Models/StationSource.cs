@@ -34,7 +34,7 @@ namespace Boater.Models
         }
 
         [RegexSearch(@"<strong>(.*)E[SD]?T</strong><br />")]
-        public DateTimeOffset Time { get; set; }
+        public DateTimeOffset UpdateTime { get; set; }
 
         /// <summary>
         /// The coordinates of the source location

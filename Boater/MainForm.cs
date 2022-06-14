@@ -17,7 +17,7 @@ namespace Boater
         /// <remarks>The object is readonly but the fields in the object are not.</remarks>
         private readonly ViewModel State;
 
-        private readonly NoaaRssFeed NOAA;
+        private readonly NoaaRssClient NOAA;
 
         private readonly IReadOnlyCollection<BoatingArea> BoatingAreas;
 
@@ -31,7 +31,7 @@ namespace Boater
         /// </summary>
         /// <param name="initialModel">The initial state of the UI to display.</param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
-        public MainForm(ViewModel initialModel, NoaaRssFeed noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas) : this()
+        public MainForm(ViewModel initialModel, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas) : this()
         {
             State = initialModel;
             NOAA = noaaSource;

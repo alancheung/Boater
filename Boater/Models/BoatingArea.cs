@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Boater.Models
 {
@@ -34,5 +36,11 @@ namespace Boater.Models
         /// <remarks>Property not constructed from JSON so set default now.</remarks>
         [JsonIgnore]
         public List<StationSource> StationData { get; private set; } = new List<StationSource>();
+
+        /// <summary>
+        /// The latest time of a reading in the <see cref="StationData"/> collection
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset LastUpdateTime => StationData.Any() ? StationData.Max(d => d.UpdateTime) : DateTimeOffset.MinValue;
     }
 }
