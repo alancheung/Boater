@@ -1,5 +1,10 @@
 ﻿using Boater.Models;
+using Boater.Services;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Boater
@@ -15,16 +20,18 @@ namespace Boater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-            //NoaaRssFeed noaaFeed = new NoaaRssFeed(stations);
-            //noaaFeed.Start();
-
-
             ViewModel initialModel = new ViewModel()
             {
                 IsMainPanel = true
             };
-            Application.Run(new MainForm(initialModel));
+            NoaaRssFeed noaaFeed = new NoaaRssFeed();
+
+            string boatingAreaConfigPath = ConfigurationManager.AppSettings["BoatingAreaConfigPath"];
+            Console.WriteLine($"Boating area config file path: '{boatingAreaConfigPath}'");
+            string rawJson = File.ReadAllText(boatingAreaConfigPath);
+            List<BoatingArea> boatingAreas = JsonConvert.DeserializeObject<List<BoatingArea>>(rawJson);
+            
+            Application.Run(new MainForm(initialModel, noaaFeed, boatingAreas));
         }
     }
 }

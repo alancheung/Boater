@@ -252,8 +252,8 @@ namespace Boater
             // 
             // RightPanel
             // 
-            this.RightPanel.Controls.Add(this.MapPanel);
             this.RightPanel.Controls.Add(this.MainPanel);
+            this.RightPanel.Controls.Add(this.MapPanel);
             this.RightPanel.Location = new System.Drawing.Point(160, 0);
             this.RightPanel.Name = "RightPanel";
             this.RightPanel.Size = new System.Drawing.Size(640, 480);
