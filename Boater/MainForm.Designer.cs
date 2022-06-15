@@ -49,11 +49,19 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
+            this.TemperaturePanel = new System.Windows.Forms.Panel();
+            this.WindPanel = new System.Windows.Forms.Panel();
+            this.WavePanel = new System.Windows.Forms.Panel();
+            this.ForecastPanel = new System.Windows.Forms.Panel();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             this.RightPanel.SuspendLayout();
+            this.TemperaturePanel.SuspendLayout();
+            this.WindPanel.SuspendLayout();
+            this.WavePanel.SuspendLayout();
+            this.ForecastPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MapPanel
@@ -144,10 +152,10 @@ namespace Boater
             // 
             // ReadingsPanel
             // 
-            this.ReadingsPanel.Controls.Add(this.TemperatureLabel);
-            this.ReadingsPanel.Controls.Add(this.WindLabel);
-            this.ReadingsPanel.Controls.Add(this.WaveLabel);
-            this.ReadingsPanel.Controls.Add(this.ForecastLabel);
+            this.ReadingsPanel.Controls.Add(this.TemperaturePanel);
+            this.ReadingsPanel.Controls.Add(this.WindPanel);
+            this.ReadingsPanel.Controls.Add(this.WavePanel);
+            this.ReadingsPanel.Controls.Add(this.ForecastPanel);
             this.ReadingsPanel.Location = new System.Drawing.Point(0, 70);
             this.ReadingsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ReadingsPanel.Name = "ReadingsPanel";
@@ -156,7 +164,6 @@ namespace Boater
             // 
             // TemperatureLabel
             // 
-            this.TemperatureLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TemperatureLabel.Location = new System.Drawing.Point(0, 0);
             this.TemperatureLabel.Margin = new System.Windows.Forms.Padding(0);
@@ -168,9 +175,8 @@ namespace Boater
             // 
             // WindLabel
             // 
-            this.WindLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindLabel.Location = new System.Drawing.Point(320, 0);
+            this.WindLabel.Location = new System.Drawing.Point(0, 0);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
             this.WindLabel.Size = new System.Drawing.Size(320, 170);
@@ -180,9 +186,8 @@ namespace Boater
             // 
             // WaveLabel
             // 
-            this.WaveLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WaveLabel.Location = new System.Drawing.Point(0, 170);
+            this.WaveLabel.Location = new System.Drawing.Point(0, 0);
             this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WaveLabel.Name = "WaveLabel";
             this.WaveLabel.Size = new System.Drawing.Size(320, 170);
@@ -192,9 +197,8 @@ namespace Boater
             // 
             // ForecastLabel
             // 
-            this.ForecastLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForecastLabel.Location = new System.Drawing.Point(320, 170);
+            this.ForecastLabel.Location = new System.Drawing.Point(0, 0);
             this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ForecastLabel.Name = "ForecastLabel";
             this.ForecastLabel.Size = new System.Drawing.Size(320, 170);
@@ -265,6 +269,42 @@ namespace Boater
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
             // 
+            // TemperaturePanel
+            // 
+            this.TemperaturePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TemperaturePanel.Controls.Add(this.TemperatureLabel);
+            this.TemperaturePanel.Location = new System.Drawing.Point(0, 0);
+            this.TemperaturePanel.Name = "TemperaturePanel";
+            this.TemperaturePanel.Size = new System.Drawing.Size(320, 170);
+            this.TemperaturePanel.TabIndex = 0;
+            // 
+            // WindPanel
+            // 
+            this.WindPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.WindPanel.Controls.Add(this.WindLabel);
+            this.WindPanel.Location = new System.Drawing.Point(320, 0);
+            this.WindPanel.Name = "WindPanel";
+            this.WindPanel.Size = new System.Drawing.Size(320, 170);
+            this.WindPanel.TabIndex = 1;
+            // 
+            // WavePanel
+            // 
+            this.WavePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.WavePanel.Controls.Add(this.WaveLabel);
+            this.WavePanel.Location = new System.Drawing.Point(0, 170);
+            this.WavePanel.Name = "WavePanel";
+            this.WavePanel.Size = new System.Drawing.Size(320, 170);
+            this.WavePanel.TabIndex = 2;
+            // 
+            // ForecastPanel
+            // 
+            this.ForecastPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ForecastPanel.Controls.Add(this.ForecastLabel);
+            this.ForecastPanel.Location = new System.Drawing.Point(320, 170);
+            this.ForecastPanel.Name = "ForecastPanel";
+            this.ForecastPanel.Size = new System.Drawing.Size(320, 170);
+            this.ForecastPanel.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,6 +322,10 @@ namespace Boater
             this.LeftPanel.ResumeLayout(false);
             this.LeftPanel.PerformLayout();
             this.RightPanel.ResumeLayout(false);
+            this.TemperaturePanel.ResumeLayout(false);
+            this.WindPanel.ResumeLayout(false);
+            this.WavePanel.ResumeLayout(false);
+            this.ForecastPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -306,6 +350,10 @@ namespace Boater
         private System.Windows.Forms.Label WaveLabel;
         private System.Windows.Forms.Label ForecastLabel;
         private System.Windows.Forms.Timer DateTimeTimer;
+        private System.Windows.Forms.Panel TemperaturePanel;
+        private System.Windows.Forms.Panel WindPanel;
+        private System.Windows.Forms.Panel WavePanel;
+        private System.Windows.Forms.Panel ForecastPanel;
     }
 }
 
