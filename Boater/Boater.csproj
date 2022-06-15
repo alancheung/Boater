@@ -86,10 +86,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Content\OpenWeatherMap\fakeForecast.json" />
-    <None Include="Content\OpenWeatherMap\fakeWeather.json" />
+    <None Include="Content\OpenWeatherMap\fakeForecast.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\OpenWeatherMap\fakeWeather.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Content\ThreeBoatingArea.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -106,25 +110,63 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\ChesapeakeBay.png" />
-    <Content Include="Content\OpenWeatherMap\01d.png" />
-    <Content Include="Content\OpenWeatherMap\01n.png" />
-    <Content Include="Content\OpenWeatherMap\02d.png" />
-    <Content Include="Content\OpenWeatherMap\02n.png" />
-    <Content Include="Content\OpenWeatherMap\03d.png" />
-    <Content Include="Content\OpenWeatherMap\03n.png" />
-    <Content Include="Content\OpenWeatherMap\04d.png" />
-    <Content Include="Content\OpenWeatherMap\04n.png" />
-    <Content Include="Content\OpenWeatherMap\09d.png" />
-    <Content Include="Content\OpenWeatherMap\09n.png" />
-    <Content Include="Content\OpenWeatherMap\10d.png" />
-    <Content Include="Content\OpenWeatherMap\10n.png" />
-    <Content Include="Content\OpenWeatherMap\11d.png" />
-    <Content Include="Content\OpenWeatherMap\11n.png" />
-    <Content Include="Content\OpenWeatherMap\13d.png" />
-    <Content Include="Content\OpenWeatherMap\13n.png" />
-    <Content Include="Content\OpenWeatherMap\50d.png" />
-    <Content Include="Content\OpenWeatherMap\50n.png" />
+    <Content Include="Content\ChesapeakeBay.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\01d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\01n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\02d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\02n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\03d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\03n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\04d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\04n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\09d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\09n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\10d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\10n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\11d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\11n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\13d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\13n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\50d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\OpenWeatherMap\50n.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
