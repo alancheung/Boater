@@ -21,7 +21,17 @@ namespace Boater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ViewModel initialModel = new ViewModel()
+            string openWeatherMapAPIKey = ConfigurationManager.AppSettings["OpenWeatherMapAPIKey"];
+            if (string.IsNullOrWhiteSpace(openWeatherMapAPIKey))
+            {
+#if DEBUG
+                openWeatherMapAPIKey = SecretKeys.OpenWeatherMapAPIKey;
+#else
+                throw new SettingsPropertyNotFoundException($"'OpenWeatherMapAPIKey' was not set!");
+#endif
+            }
+
+                ViewModel initialModel = new ViewModel()
             {
                 IsMainPanel = true
             };
