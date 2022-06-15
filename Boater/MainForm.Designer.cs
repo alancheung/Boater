@@ -183,10 +183,10 @@ namespace Boater
             // TemperatureLabel
             // 
             this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TemperatureLabel.Location = new System.Drawing.Point(80, 0);
+            this.TemperatureLabel.Location = new System.Drawing.Point(88, 0);
             this.TemperatureLabel.Margin = new System.Windows.Forms.Padding(0);
             this.TemperatureLabel.Name = "TemperatureLabel";
-            this.TemperatureLabel.Size = new System.Drawing.Size(240, 170);
+            this.TemperatureLabel.Size = new System.Drawing.Size(232, 170);
             this.TemperatureLabel.TabIndex = 0;
             this.TemperatureLabel.Text = "Temperature";
             this.TemperatureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -204,10 +204,10 @@ namespace Boater
             // WindLabel
             // 
             this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindLabel.Location = new System.Drawing.Point(80, 0);
+            this.WindLabel.Location = new System.Drawing.Point(88, 0);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
-            this.WindLabel.Size = new System.Drawing.Size(240, 170);
+            this.WindLabel.Size = new System.Drawing.Size(232, 170);
             this.WindLabel.TabIndex = 1;
             this.WindLabel.Text = "Wind Speed\r\nDirection";
             this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -225,10 +225,10 @@ namespace Boater
             // WaveLabel
             // 
             this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WaveLabel.Location = new System.Drawing.Point(80, 0);
+            this.WaveLabel.Location = new System.Drawing.Point(88, 0);
             this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WaveLabel.Name = "WaveLabel";
-            this.WaveLabel.Size = new System.Drawing.Size(240, 170);
+            this.WaveLabel.Size = new System.Drawing.Size(232, 170);
             this.WaveLabel.TabIndex = 2;
             this.WaveLabel.Text = "Wave Height";
             this.WaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -246,10 +246,10 @@ namespace Boater
             // ForecastLabel
             // 
             this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForecastLabel.Location = new System.Drawing.Point(80, 0);
+            this.ForecastLabel.Location = new System.Drawing.Point(88, 0);
             this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ForecastLabel.Name = "ForecastLabel";
-            this.ForecastLabel.Size = new System.Drawing.Size(240, 170);
+            this.ForecastLabel.Size = new System.Drawing.Size(232, 170);
             this.ForecastLabel.TabIndex = 3;
             this.ForecastLabel.Text = "Forecast";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
