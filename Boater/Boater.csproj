@@ -54,6 +54,8 @@
     <Compile Include="Common\Attributes\RegexSearchAttribute.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Helpers.cs" />
+    <Compile Include="Content\SecretKeys.cs" />
+    <Compile Include="Content\SecretKeys.untracked.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
