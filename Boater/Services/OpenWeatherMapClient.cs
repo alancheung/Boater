@@ -17,16 +17,6 @@ namespace Boater.Services
         public DateTimeOffset LastUpdate;
 
         /// <summary>
-        /// The cached results of the weather update.
-        /// </summary>
-        private SingleResult<CurrentWeatherResult> _currentWeather;
-
-        /// <summary>
-        /// The cached results of the weather forecast.
-        /// </summary>
-        private Result<FiveDaysForecastResult> _forecastWeather;
-
-        /// <summary>
         /// Path the assets folder for OpenWeatherMap.
         /// </summary>
         public static string OpenWeatherMapContentFolderPath;
@@ -35,11 +25,6 @@ namespace Boater.Services
         /// Should we get the real weather from the source?
         /// </summary>
         public bool UseRealWeather { get; set; }
-
-        /// <summary>
-        /// Did the last update fail?
-        /// </summary>
-        public bool LastUpdateFailed { get; set; }
 
         /// <summary>
         /// Constructor
@@ -51,7 +36,6 @@ namespace Boater.Services
             WeatherNet.ClientSettings.SetApiKey(apiKey);
             OpenWeatherMapContentFolderPath = contentPath;
             UseRealWeather = useRealWeather;
-            LastUpdateFailed = false;
         }
 
         public static string GetImage(WeatherResult result)
@@ -65,13 +49,26 @@ namespace Boater.Services
         /// Get the current
         /// </summary>
         /// <returns>Tuple representing if the request was successful and the data in the request.</returns>
-        public Task<Tuple<bool, CurrentWeatherResult>> UpdateWeather(BoatingArea area)
+        public async Task<bool> UpdateWeather(BoatingArea area)
         {
-            Task<Tuple<bool, CurrentWeatherResult>> t = Task.Run(() => UpdateWeather(area.Latitude, area.Longitude));
-            return t;
+            // Get the data from the source
+            Task<Tuple<bool, CurrentWeatherResult>> task = Task.Run(() => GetWeather(area.Latitude, area.Longitude));
+            await task;
+
+            // Parse it into the area object.
+            Tuple<bool, CurrentWeatherResult> result = task.Result;
+            bool success = result.Item1;
+
+            // Only update if successful so that the cached data is always viewable at least.
+            if (success)
+            {
+                area.WeatherResult = result.Item2;
+            }
+
+            return success;
         }
 
-        private Tuple<bool, CurrentWeatherResult> UpdateWeather(double latitude, double longitude)
+        private Tuple<bool, CurrentWeatherResult> GetWeather(double latitude, double longitude)
         {
             try
             {
@@ -91,13 +88,10 @@ namespace Boater.Services
                 if (result.Success)
                 {
                     LastUpdate = DateTimeOffset.Now;
-                    LastUpdateFailed = false;
-                    _currentWeather = result;
                     result.Item.Date = TimeZone.CurrentTimeZone.ToLocalTime(result.Item.Date);
                 }
                 else
                 {
-                    LastUpdateFailed = true;
                     Console.WriteLine($"Weather update failed with message: {result.Message}");
                 }
 
@@ -114,13 +108,26 @@ namespace Boater.Services
         /// Update the forecasted weather held in memory and broadcast the updates.
         /// </summary>
         /// <returns>Was the update successful</returns>
-        public Task<Tuple<bool, List<FiveDaysForecastResult>>> UpdateForecast(BoatingArea area)
+        public async Task<bool> UpdateForecast(BoatingArea area)
         {
-            Task<Tuple<bool, List<FiveDaysForecastResult>>> t = Task.Run(() => UpdateForecast(area.Latitude, area.Longitude));
-            return t;
+            // Get the data from the source
+            Task<Tuple<bool, List<FiveDaysForecastResult>>> task = Task.Run(() => GetForecast(area.Latitude, area.Longitude));
+            await task;
+
+            // Parse it into the area object.
+            Tuple<bool, List<FiveDaysForecastResult>> result = task.Result;
+            bool success = result.Item1;
+
+            // Only update if successful so that the cached data is always viewable at least.
+            if (success)
+            {
+                area.ForecastResult = result.Item2;
+            }
+
+            return success;
         }
 
-        private Tuple<bool, List<FiveDaysForecastResult>> UpdateForecast(double latitude, double longitude)
+        private Tuple<bool, List<FiveDaysForecastResult>> GetForecast(double latitude, double longitude)
         {
             try
             {
@@ -140,17 +147,15 @@ namespace Boater.Services
                 if (result.Success)
                 {
                     LastUpdate = DateTimeOffset.Now;
-                    LastUpdateFailed = false;
-                    _forecastWeather = result;
                     result.Items.ForEach(r => r.Date = TimeZone.CurrentTimeZone.ToLocalTime(r.Date));
+                    return Tuple.Create(true, result.Items);
                 }
                 else
                 {
-                    LastUpdateFailed = true;
                     Console.WriteLine($"Weather update failed with message: {result.Message}");
+                    return Tuple.Create(false, result.Items);
                 }
 
-                return Tuple.Create(result.Success, result.Items);
             }
             catch (Exception ex)
             {

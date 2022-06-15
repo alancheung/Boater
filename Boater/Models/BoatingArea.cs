@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeatherNet.Model;
 
 namespace Boater.Models
 {
@@ -10,6 +11,7 @@ namespace Boater.Models
     /// </summary>
     public class BoatingArea
     {
+        #region JSON
         /// <summary>
         /// Official title to display on the reading panel header.
         /// </summary>
@@ -39,7 +41,9 @@ namespace Boater.Models
         /// The maximum distance from the station to still allow results.
         /// </summary>
         public int MaxRange { get; set; }
+        #endregion
 
+        #region NOAA Data
         /// <summary>
         /// The data from each station
         /// </summary>
@@ -52,5 +56,18 @@ namespace Boater.Models
         /// </summary>
         [JsonIgnore]
         public DateTimeOffset LastUpdateTime => StationData.Any() ? StationData.Max(d => d.UpdateTime) : DateTimeOffset.MinValue;
+        #endregion
+
+        #region OpenWeatherMap Data
+        /// <summary>
+        /// The cached results of the weather update.
+        /// </summary>
+        public CurrentWeatherResult WeatherResult;
+
+        /// <summary>
+        /// The cached results of the weather forecast.
+        /// </summary>
+        public List<FiveDaysForecastResult> ForecastResult;
+        #endregion
     }
 }

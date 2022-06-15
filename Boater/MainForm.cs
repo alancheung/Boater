@@ -17,6 +17,8 @@ namespace Boater
         /// <remarks>The object is readonly but the fields in the object are not.</remarks>
         private readonly ViewModel State;
 
+        private readonly OpenWeatherMapClient OWM;
+
         private readonly NoaaRssClient NOAA;
 
         private readonly IReadOnlyCollection<BoatingArea> BoatingAreas;
@@ -30,13 +32,15 @@ namespace Boater
         /// Constructor
         /// </summary>
         /// <param name="initialModel">The initial state of the UI to display.</param>
+        /// <param name="weatherSource">A helper preconstructed to retrieve data from OpenWeatherMap</param>
         /// <param name="noaaSource">A helper preconstructed to retrieve data from NOAA</param>
         /// <param name="boatingAreas">A list of selectable <see cref="BoatingArea"/></param>
         /// <param name="initialArea">The initial selection from <paramref name="boatingAreas"/></param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
-        public MainForm(ViewModel initialModel, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas, string initialAreaTitle = null) : this()
+        public MainForm(ViewModel initialModel, OpenWeatherMapClient weatherSource, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas, string initialAreaTitle = null) : this()
         {
             State = initialModel;
+            OWM = weatherSource;
             NOAA = noaaSource;
             BoatingAreas = boatingAreas;
             UpdateUI();

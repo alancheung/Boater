@@ -19,13 +19,15 @@ namespace Boater
             UpdateUI();
         }
 
-        private void SetActiveArea(BoatingArea area)
+
+        private async void SetActiveArea(BoatingArea area)
         {
             if (area != null)
             {
                 State.ActiveArea = area;
 
-                NOAA.GetLatestData(State.ActiveArea);
+                // NOAA.GetLatestData(State.ActiveArea);
+                await OWM.UpdateWeather(State.ActiveArea);
                 AreaChanged(State.ActiveArea);
             }
             else

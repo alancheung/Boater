@@ -5,13 +5,22 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Boater
 {
     static class Program
     {
+#if DEBUG
+        /// <summary>
+        /// Is the current program executing in RELEASE mode? Determined with !DEBUG directive.
+        /// Static readonly to prevent unreachable code warnings.
+        /// </summary>
+        public static readonly bool RELEASE = false;
+#else
+        public static readonly bool RELEASE = true;
+#endif
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,12 +33,14 @@ namespace Boater
             string openWeatherMapAPIKey = ConfigurationManager.AppSettings["OpenWeatherMapAPIKey"];
             if (string.IsNullOrWhiteSpace(openWeatherMapAPIKey))
             {
-#if DEBUG
+                if (RELEASE)
+                {
+                    throw new SettingsPropertyNotFoundException($"'OpenWeatherMapAPIKey' was not set!");
+                }
                 openWeatherMapAPIKey = SecretKeys.OpenWeatherMapAPIKey;
-#else
-                throw new SettingsPropertyNotFoundException($"'OpenWeatherMapAPIKey' was not set!");
-#endif
             }
+            string openWeatherMapContentPath = ConfigurationManager.AppSettings["OpenWeatherMapContentPath"];
+            OpenWeatherMapClient ollieWilliams = new OpenWeatherMapClient(apiKey: openWeatherMapAPIKey, contentPath: openWeatherMapContentPath, useRealWeather: RELEASE);
 
                 ViewModel initialModel = new ViewModel()
             {
@@ -44,7 +55,7 @@ namespace Boater
 
             string defaultBoatingAreaTitle = ConfigurationManager.AppSettings["DefaultBoatingAreaTitle"];
 
-            Application.Run(new MainForm(initialModel, noaaFeed, boatingAreas, defaultBoatingAreaTitle));
+            Application.Run(new MainForm(initialModel, ollieWilliams, noaaFeed, boatingAreas, defaultBoatingAreaTitle));
         }
     }
 }
