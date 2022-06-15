@@ -21,6 +21,16 @@ namespace Boater.Models
         public string RssUrl { get; set; }
 
         /// <summary>
+        /// Latitude of the area
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// Longitude of the area
+        /// </summary>
+        public double Longitude { get; set; }
+
+        /// <summary>
         /// The URL to obtain text updates to display in the left panel.
         /// </summary>
         public string TextUrl { get; set; }
