@@ -86,6 +86,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Content\OpenWeatherMap\fakeForecast.json" />
+    <None Include="Content\OpenWeatherMap\fakeWeather.json" />
     <None Include="Content\ThreeBoatingArea.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -105,9 +107,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ChesapeakeBay.png" />
+    <Content Include="Content\OpenWeatherMap\01d.png" />
+    <Content Include="Content\OpenWeatherMap\01n.png" />
+    <Content Include="Content\OpenWeatherMap\02d.png" />
+    <Content Include="Content\OpenWeatherMap\02n.png" />
+    <Content Include="Content\OpenWeatherMap\03d.png" />
+    <Content Include="Content\OpenWeatherMap\03n.png" />
+    <Content Include="Content\OpenWeatherMap\04d.png" />
+    <Content Include="Content\OpenWeatherMap\04n.png" />
+    <Content Include="Content\OpenWeatherMap\09d.png" />
+    <Content Include="Content\OpenWeatherMap\09n.png" />
+    <Content Include="Content\OpenWeatherMap\10d.png" />
+    <Content Include="Content\OpenWeatherMap\10n.png" />
+    <Content Include="Content\OpenWeatherMap\11d.png" />
+    <Content Include="Content\OpenWeatherMap\11n.png" />
+    <Content Include="Content\OpenWeatherMap\13d.png" />
+    <Content Include="Content\OpenWeatherMap\13n.png" />
+    <Content Include="Content\OpenWeatherMap\50d.png" />
+    <Content Include="Content\OpenWeatherMap\50n.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\OpenWeatherMap\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
