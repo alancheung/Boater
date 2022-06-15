@@ -371,5 +371,5 @@ FodyWeavers.xsd
 
 # Special Untracked Files
 untracked.config
-untracked*
+*untracked*
 APIKeysLocal.cs
