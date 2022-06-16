@@ -201,11 +201,11 @@ namespace Boater
             // 
             // TemperatureLabel
             // 
-            this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TemperatureLabel.Location = new System.Drawing.Point(200, 0);
+            this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TemperatureLabel.Location = new System.Drawing.Point(195, 25);
             this.TemperatureLabel.Margin = new System.Windows.Forms.Padding(0);
             this.TemperatureLabel.Name = "TemperatureLabel";
-            this.TemperatureLabel.Size = new System.Drawing.Size(120, 85);
+            this.TemperatureLabel.Size = new System.Drawing.Size(120, 60);
             this.TemperatureLabel.TabIndex = 0;
             this.TemperatureLabel.Text = "-- ° F";
             this.TemperatureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -233,7 +233,7 @@ namespace Boater
             // 
             // WindLabel
             // 
-            this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WindLabel.Location = new System.Drawing.Point(128, 0);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
@@ -265,7 +265,7 @@ namespace Boater
             // 
             // WaveLabel
             // 
-            this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WaveLabel.Location = new System.Drawing.Point(128, 0);
             this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WaveLabel.Name = "WaveLabel";
@@ -297,7 +297,7 @@ namespace Boater
             // 
             // ForecastLabel
             // 
-            this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForecastLabel.Location = new System.Drawing.Point(128, 0);
             this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ForecastLabel.Name = "ForecastLabel";
@@ -371,11 +371,11 @@ namespace Boater
             // 
             // TemperatureAdditionalLabel
             // 
-            this.TemperatureAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TemperatureAdditionalLabel.Location = new System.Drawing.Point(200, 85);
+            this.TemperatureAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TemperatureAdditionalLabel.Location = new System.Drawing.Point(195, 85);
             this.TemperatureAdditionalLabel.Margin = new System.Windows.Forms.Padding(0);
             this.TemperatureAdditionalLabel.Name = "TemperatureAdditionalLabel";
-            this.TemperatureAdditionalLabel.Size = new System.Drawing.Size(120, 85);
+            this.TemperatureAdditionalLabel.Size = new System.Drawing.Size(120, 60);
             this.TemperatureAdditionalLabel.TabIndex = 2;
             this.TemperatureAdditionalLabel.Text = "-- ° F";
             this.TemperatureAdditionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -383,19 +383,20 @@ namespace Boater
             // TemperatureAdditionalImage
             // 
             this.TemperatureAdditionalImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureAdditionalImage.Image")));
-            this.TemperatureAdditionalImage.Location = new System.Drawing.Point(130, 90);
+            this.TemperatureAdditionalImage.Location = new System.Drawing.Point(130, 85);
             this.TemperatureAdditionalImage.Name = "TemperatureAdditionalImage";
-            this.TemperatureAdditionalImage.Size = new System.Drawing.Size(70, 70);
-            this.TemperatureAdditionalImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.TemperatureAdditionalImage.Size = new System.Drawing.Size(60, 60);
+            this.TemperatureAdditionalImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.TemperatureAdditionalImage.TabIndex = 3;
             this.TemperatureAdditionalImage.TabStop = false;
             // 
             // TemperatureImage
             // 
             this.TemperatureImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureImage.Image")));
-            this.TemperatureImage.Location = new System.Drawing.Point(130, 5);
+            this.TemperatureImage.Location = new System.Drawing.Point(130, 25);
             this.TemperatureImage.Name = "TemperatureImage";
-            this.TemperatureImage.Size = new System.Drawing.Size(70, 70);
+            this.TemperatureImage.Size = new System.Drawing.Size(60, 60);
+            this.TemperatureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.TemperatureImage.TabIndex = 4;
             this.TemperatureImage.TabStop = false;
             // 
