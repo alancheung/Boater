@@ -114,8 +114,16 @@
     <Content Include="Content\ChesapeakeBay.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Flaticon\cloud-scaled.png" />
+    <Content Include="Content\Flaticon\cloud.png" />
+    <Content Include="Content\Flaticon\images-sourced-from-flaticon.com.txt" />
+    <Content Include="Content\Flaticon\thermometer-scaled.png" />
     <Content Include="Content\Flaticon\thermometer.png" />
+    <Content Include="Content\Flaticon\water-scaled.png" />
+    <Content Include="Content\Flaticon\water.png" />
+    <Content Include="Content\Flaticon\wave-scaled.png" />
     <Content Include="Content\Flaticon\wave.png" />
+    <Content Include="Content\Flaticon\wind-scaled.png" />
     <Content Include="Content\Flaticon\wind.png" />
     <Content Include="Content\OpenWeatherMap\01d.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
