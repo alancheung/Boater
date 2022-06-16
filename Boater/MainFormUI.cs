@@ -26,7 +26,7 @@ namespace Boater
             {
                 State.ActiveArea = area;
 
-                // NOAA.GetLatestData(State.ActiveArea);
+                NOAA.GetLatestData(State.ActiveArea);
                 await OWM.UpdateWeather(State.ActiveArea);
                 AreaChanged(State.ActiveArea);
             }
@@ -43,11 +43,21 @@ namespace Boater
             double? temp = area.StationData.FirstOrDefault(d => d.AirTemperature.HasValue)?.AirTemperature;
             if (temp.HasValue)
             {
-                TemperatureLabel.Text = $"Temperature\n{temp}";
+                TemperatureLabel.Text = $"{temp}\u00B0 F";
             }
             else
             {
                 TemperatureLabel.Text = "No data...";
+            }
+
+            double? waterTemp = area.StationData.FirstOrDefault(d => d.WaterTemperature.HasValue)?.WaterTemperature;
+            if (waterTemp.HasValue)
+            {
+                TemperatureAdditionalLabel.Text = $"{waterTemp}\u00B0 F";
+            }
+            else
+            {
+                TemperatureAdditionalLabel.Text = "No data...";
             }
 
             double? windSpeed = area.StationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
