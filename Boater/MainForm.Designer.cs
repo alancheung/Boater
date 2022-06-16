@@ -40,12 +40,16 @@ namespace Boater
             this.OtherLabel = new System.Windows.Forms.Label();
             this.ReadingsPanel = new System.Windows.Forms.Panel();
             this.TemperaturePanel = new System.Windows.Forms.Panel();
+            this.TemperatureImage = new System.Windows.Forms.PictureBox();
             this.TemperatureLabel = new System.Windows.Forms.Label();
             this.WindPanel = new System.Windows.Forms.Panel();
+            this.WindImage = new System.Windows.Forms.PictureBox();
             this.WindLabel = new System.Windows.Forms.Label();
             this.WavePanel = new System.Windows.Forms.Panel();
+            this.WaveImage = new System.Windows.Forms.PictureBox();
             this.WaveLabel = new System.Windows.Forms.Label();
             this.ForecastPanel = new System.Windows.Forms.Panel();
+            this.ForecastImage = new System.Windows.Forms.PictureBox();
             this.ForecastLabel = new System.Windows.Forms.Label();
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.TimeLabel = new System.Windows.Forms.Label();
@@ -53,23 +57,19 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.TemperatureImage = new System.Windows.Forms.PictureBox();
-            this.WindImage = new System.Windows.Forms.PictureBox();
-            this.WaveImage = new System.Windows.Forms.PictureBox();
-            this.ForecastImage = new System.Windows.Forms.PictureBox();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
             this.TemperaturePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).BeginInit();
             this.WindPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WindImage)).BeginInit();
             this.WavePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaveImage)).BeginInit();
             this.ForecastPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ForecastImage)).BeginInit();
             this.LeftPanel.SuspendLayout();
             this.RightPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaveImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ForecastImage)).BeginInit();
             this.SuspendLayout();
             // 
             // MapPanel
@@ -180,13 +180,24 @@ namespace Boater
             this.TemperaturePanel.Size = new System.Drawing.Size(320, 170);
             this.TemperaturePanel.TabIndex = 0;
             // 
+            // TemperatureImage
+            // 
+            this.TemperatureImage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.TemperatureImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureImage.Image")));
+            this.TemperatureImage.Location = new System.Drawing.Point(5, 25);
+            this.TemperatureImage.Name = "TemperatureImage";
+            this.TemperatureImage.Size = new System.Drawing.Size(120, 120);
+            this.TemperatureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.TemperatureImage.TabIndex = 1;
+            this.TemperatureImage.TabStop = false;
+            // 
             // TemperatureLabel
             // 
             this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TemperatureLabel.Location = new System.Drawing.Point(88, 0);
+            this.TemperatureLabel.Location = new System.Drawing.Point(128, 0);
             this.TemperatureLabel.Margin = new System.Windows.Forms.Padding(0);
             this.TemperatureLabel.Name = "TemperatureLabel";
-            this.TemperatureLabel.Size = new System.Drawing.Size(232, 170);
+            this.TemperatureLabel.Size = new System.Drawing.Size(192, 170);
             this.TemperatureLabel.TabIndex = 0;
             this.TemperatureLabel.Text = "Temperature";
             this.TemperatureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -201,13 +212,24 @@ namespace Boater
             this.WindPanel.Size = new System.Drawing.Size(320, 170);
             this.WindPanel.TabIndex = 1;
             // 
+            // WindImage
+            // 
+            this.WindImage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.WindImage.Image = ((System.Drawing.Image)(resources.GetObject("WindImage.Image")));
+            this.WindImage.Location = new System.Drawing.Point(5, 25);
+            this.WindImage.Name = "WindImage";
+            this.WindImage.Size = new System.Drawing.Size(120, 120);
+            this.WindImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.WindImage.TabIndex = 2;
+            this.WindImage.TabStop = false;
+            // 
             // WindLabel
             // 
             this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindLabel.Location = new System.Drawing.Point(88, 0);
+            this.WindLabel.Location = new System.Drawing.Point(128, 0);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
-            this.WindLabel.Size = new System.Drawing.Size(232, 170);
+            this.WindLabel.Size = new System.Drawing.Size(192, 170);
             this.WindLabel.TabIndex = 1;
             this.WindLabel.Text = "Wind Speed\r\nDirection";
             this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -222,13 +244,24 @@ namespace Boater
             this.WavePanel.Size = new System.Drawing.Size(320, 170);
             this.WavePanel.TabIndex = 2;
             // 
+            // WaveImage
+            // 
+            this.WaveImage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.WaveImage.Image = ((System.Drawing.Image)(resources.GetObject("WaveImage.Image")));
+            this.WaveImage.Location = new System.Drawing.Point(5, 25);
+            this.WaveImage.Name = "WaveImage";
+            this.WaveImage.Size = new System.Drawing.Size(120, 120);
+            this.WaveImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.WaveImage.TabIndex = 3;
+            this.WaveImage.TabStop = false;
+            // 
             // WaveLabel
             // 
             this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WaveLabel.Location = new System.Drawing.Point(88, 0);
+            this.WaveLabel.Location = new System.Drawing.Point(128, 0);
             this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WaveLabel.Name = "WaveLabel";
-            this.WaveLabel.Size = new System.Drawing.Size(232, 170);
+            this.WaveLabel.Size = new System.Drawing.Size(192, 170);
             this.WaveLabel.TabIndex = 2;
             this.WaveLabel.Text = "Wave Height";
             this.WaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -243,13 +276,24 @@ namespace Boater
             this.ForecastPanel.Size = new System.Drawing.Size(320, 170);
             this.ForecastPanel.TabIndex = 3;
             // 
+            // ForecastImage
+            // 
+            this.ForecastImage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.ForecastImage.Image = ((System.Drawing.Image)(resources.GetObject("ForecastImage.Image")));
+            this.ForecastImage.Location = new System.Drawing.Point(5, 25);
+            this.ForecastImage.Name = "ForecastImage";
+            this.ForecastImage.Size = new System.Drawing.Size(120, 120);
+            this.ForecastImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.ForecastImage.TabIndex = 4;
+            this.ForecastImage.TabStop = false;
+            // 
             // ForecastLabel
             // 
             this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForecastLabel.Location = new System.Drawing.Point(88, 0);
+            this.ForecastLabel.Location = new System.Drawing.Point(128, 0);
             this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ForecastLabel.Name = "ForecastLabel";
-            this.ForecastLabel.Size = new System.Drawing.Size(232, 170);
+            this.ForecastLabel.Size = new System.Drawing.Size(192, 170);
             this.ForecastLabel.TabIndex = 3;
             this.ForecastLabel.Text = "Forecast";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -317,50 +361,6 @@ namespace Boater
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
             // 
-            // TemperatureImage
-            // 
-            this.TemperatureImage.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.TemperatureImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureImage.Image")));
-            this.TemperatureImage.Location = new System.Drawing.Point(5, 45);
-            this.TemperatureImage.Name = "TemperatureImage";
-            this.TemperatureImage.Size = new System.Drawing.Size(80, 80);
-            this.TemperatureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.TemperatureImage.TabIndex = 1;
-            this.TemperatureImage.TabStop = false;
-            // 
-            // WindImage
-            // 
-            this.WindImage.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.WindImage.Image = ((System.Drawing.Image)(resources.GetObject("WindImage.Image")));
-            this.WindImage.Location = new System.Drawing.Point(5, 45);
-            this.WindImage.Name = "WindImage";
-            this.WindImage.Size = new System.Drawing.Size(80, 80);
-            this.WindImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.WindImage.TabIndex = 2;
-            this.WindImage.TabStop = false;
-            // 
-            // WaveImage
-            // 
-            this.WaveImage.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.WaveImage.Image = ((System.Drawing.Image)(resources.GetObject("WaveImage.Image")));
-            this.WaveImage.Location = new System.Drawing.Point(5, 45);
-            this.WaveImage.Name = "WaveImage";
-            this.WaveImage.Size = new System.Drawing.Size(80, 80);
-            this.WaveImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.WaveImage.TabIndex = 3;
-            this.WaveImage.TabStop = false;
-            // 
-            // ForecastImage
-            // 
-            this.ForecastImage.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ForecastImage.Image = ((System.Drawing.Image)(resources.GetObject("ForecastImage.Image")));
-            this.ForecastImage.Location = new System.Drawing.Point(5, 45);
-            this.ForecastImage.Name = "ForecastImage";
-            this.ForecastImage.Size = new System.Drawing.Size(80, 80);
-            this.ForecastImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ForecastImage.TabIndex = 4;
-            this.ForecastImage.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,16 +376,16 @@ namespace Boater
             this.MainPanel.ResumeLayout(false);
             this.ReadingsPanel.ResumeLayout(false);
             this.TemperaturePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).EndInit();
             this.WindPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.WindImage)).EndInit();
             this.WavePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.WaveImage)).EndInit();
             this.ForecastPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ForecastImage)).EndInit();
             this.LeftPanel.ResumeLayout(false);
             this.LeftPanel.PerformLayout();
             this.RightPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WindImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WaveImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ForecastImage)).EndInit();
             this.ResumeLayout(false);
 
         }
