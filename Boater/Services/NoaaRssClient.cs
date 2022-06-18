@@ -22,12 +22,10 @@ namespace Boater.Services
         /// <returns>True if <see cref="BoatingArea.StationData"/> collection updated, false otherwise</returns>
         public bool GetLatestData(BoatingArea area)
         {
-            // Read out to only hit dependent property once.
-            DateTimeOffset lastUpdateTime = area.LastUpdateTime;
-            if (lastUpdateTime > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
+            if (area.LastStationUpdateTime > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
-                Console.WriteLine($"No update required. Last update for area {area.Title} was {lastUpdateTime}");
+                Console.WriteLine($"No station update required. Last update for area {area.Title} was {area.LastStationUpdateTime}");
                 return false;
             }
 

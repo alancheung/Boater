@@ -52,10 +52,10 @@ namespace Boater.Models
         public List<StationSource> StationData { get; private set; } = new List<StationSource>();
 
         /// <summary>
-        /// The latest time of a reading in the <see cref="StationData"/> collection
+        /// The last time a reading in the <see cref="StationData"/> collection was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastUpdateTime => StationData.Any() ? StationData.Max(d => d.UpdateTime) : DateTimeOffset.MinValue;
+        public DateTimeOffset LastStationUpdateTime { get; set; }
         #endregion
 
         #region OpenWeatherMap Data
@@ -65,9 +65,21 @@ namespace Boater.Models
         public CurrentWeatherResult WeatherResult;
 
         /// <summary>
+        /// The last time <see cref="WeatherResult"/> was updated.
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset LastWeatherUpdateTime { get; set; }
+
+        /// <summary>
         /// The cached results of the weather forecast.
         /// </summary>
         public List<FiveDaysForecastResult> ForecastResult;
+
+        /// <summary>
+        /// The last time <see cref="ForecastResult"/> was updated.
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset LastForecastResult { get; set; }
         #endregion
     }
 }

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using WeatherNet.Clients;
@@ -12,14 +13,14 @@ namespace Boater.Services
     public class OpenWeatherMapClient
     {
         /// <summary>
-        /// Timestamp of last weather update.
-        /// </summary>
-        public DateTimeOffset LastUpdate;
-
-        /// <summary>
         /// Path the assets folder for OpenWeatherMap.
         /// </summary>
         public static string OpenWeatherMapContentFolderPath;
+
+        /// <summary>
+        /// The maximum amount of time before data should be updated.
+        /// </summary>
+        private readonly TimeSpan MaxMinsBeforeUpdateRequired;
 
         /// <summary>
         /// Should we get the real weather from the source?
@@ -35,6 +36,7 @@ namespace Boater.Services
         {
             WeatherNet.ClientSettings.SetApiKey(apiKey);
             OpenWeatherMapContentFolderPath = contentPath;
+            MaxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings[nameof(MaxMinsBeforeUpdateRequired)]));
             UseRealWeather = useRealWeather;
         }
 
@@ -51,6 +53,13 @@ namespace Boater.Services
         /// <returns>Tuple representing if the request was successful and the data in the request.</returns>
         public async Task<bool> UpdateWeather(BoatingArea area)
         {
+            if (area.LastWeatherUpdateTime > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
+            {
+                // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
+                Console.WriteLine($"No weather update required. Last update for area {area.Title} was {area.LastWeatherUpdateTime}");
+                return false;
+            }
+
             // Get the data from the source
             Task<Tuple<bool, CurrentWeatherResult>> task = Task.Run(() => GetWeather(area.Latitude, area.Longitude));
             await task;
@@ -63,6 +72,7 @@ namespace Boater.Services
             if (success)
             {
                 area.WeatherResult = result.Item2;
+                area.LastWeatherUpdateTime = DateTimeOffset.Now;
             }
 
             return success;
@@ -87,7 +97,6 @@ namespace Boater.Services
 
                 if (result.Success)
                 {
-                    LastUpdate = DateTimeOffset.Now;
                     result.Item.Date = TimeZone.CurrentTimeZone.ToLocalTime(result.Item.Date);
                 }
                 else
@@ -110,6 +119,13 @@ namespace Boater.Services
         /// <returns>Was the update successful</returns>
         public async Task<bool> UpdateForecast(BoatingArea area)
         {
+            if (area.LastForecastResult > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
+            {
+                // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
+                Console.WriteLine($"No forecast update required. Last update for area {area.Title} was {area.LastWeatherUpdateTime}");
+                return false;
+            }
+
             // Get the data from the source
             Task<Tuple<bool, List<FiveDaysForecastResult>>> task = Task.Run(() => GetForecast(area.Latitude, area.Longitude));
             await task;
@@ -122,6 +138,7 @@ namespace Boater.Services
             if (success)
             {
                 area.ForecastResult = result.Item2;
+                area.LastForecastResult = DateTimeOffset.Now;
             }
 
             return success;
@@ -146,7 +163,6 @@ namespace Boater.Services
 
                 if (result.Success)
                 {
-                    LastUpdate = DateTimeOffset.Now;
                     result.Items.ForEach(r => r.Date = TimeZone.CurrentTimeZone.ToLocalTime(r.Date));
                     return Tuple.Create(true, result.Items);
                 }
