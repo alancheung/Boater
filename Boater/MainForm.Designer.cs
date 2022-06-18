@@ -41,7 +41,10 @@ namespace Boater
             this.ReadingsPanel = new System.Windows.Forms.Panel();
             this.TemperaturePanel = new System.Windows.Forms.Panel();
             this.TemperatureStatusImage = new System.Windows.Forms.PictureBox();
+            this.TemperatureImage = new System.Windows.Forms.PictureBox();
             this.TemperatureLabel = new System.Windows.Forms.Label();
+            this.TemperatureAdditionalImage = new System.Windows.Forms.PictureBox();
+            this.TemperatureAdditionalLabel = new System.Windows.Forms.Label();
             this.WindPanel = new System.Windows.Forms.Panel();
             this.WindImage = new System.Windows.Forms.PictureBox();
             this.WindLabel = new System.Windows.Forms.Label();
@@ -57,14 +60,14 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.TemperatureAdditionalLabel = new System.Windows.Forms.Label();
-            this.TemperatureAdditionalImage = new System.Windows.Forms.PictureBox();
-            this.TemperatureImage = new System.Windows.Forms.PictureBox();
+            this.NorthLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
             this.TemperaturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TemperatureStatusImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureAdditionalImage)).BeginInit();
             this.WindPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WindImage)).BeginInit();
             this.WavePanel.SuspendLayout();
@@ -73,8 +76,6 @@ namespace Boater
             ((System.ComponentModel.ISupportInitialize)(this.ForecastImage)).BeginInit();
             this.LeftPanel.SuspendLayout();
             this.RightPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureAdditionalImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).BeginInit();
             this.SuspendLayout();
             // 
             // MapPanel
@@ -199,6 +200,16 @@ namespace Boater
             this.TemperatureStatusImage.TabIndex = 1;
             this.TemperatureStatusImage.TabStop = false;
             // 
+            // TemperatureImage
+            // 
+            this.TemperatureImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureImage.Image")));
+            this.TemperatureImage.Location = new System.Drawing.Point(130, 25);
+            this.TemperatureImage.Name = "TemperatureImage";
+            this.TemperatureImage.Size = new System.Drawing.Size(60, 60);
+            this.TemperatureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.TemperatureImage.TabIndex = 4;
+            this.TemperatureImage.TabStop = false;
+            // 
             // TemperatureLabel
             // 
             this.TemperatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -210,12 +221,35 @@ namespace Boater
             this.TemperatureLabel.Text = "-- ° F";
             this.TemperatureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // TemperatureAdditionalImage
+            // 
+            this.TemperatureAdditionalImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureAdditionalImage.Image")));
+            this.TemperatureAdditionalImage.Location = new System.Drawing.Point(130, 85);
+            this.TemperatureAdditionalImage.Name = "TemperatureAdditionalImage";
+            this.TemperatureAdditionalImage.Size = new System.Drawing.Size(60, 60);
+            this.TemperatureAdditionalImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.TemperatureAdditionalImage.TabIndex = 3;
+            this.TemperatureAdditionalImage.TabStop = false;
+            // 
+            // TemperatureAdditionalLabel
+            // 
+            this.TemperatureAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TemperatureAdditionalLabel.Location = new System.Drawing.Point(195, 85);
+            this.TemperatureAdditionalLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.TemperatureAdditionalLabel.Name = "TemperatureAdditionalLabel";
+            this.TemperatureAdditionalLabel.Size = new System.Drawing.Size(120, 60);
+            this.TemperatureAdditionalLabel.TabIndex = 2;
+            this.TemperatureAdditionalLabel.Text = "-- ° F";
+            this.TemperatureAdditionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // WindPanel
             // 
             this.WindPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.WindPanel.Controls.Add(this.NorthLabel);
             this.WindPanel.Controls.Add(this.WindImage);
             this.WindPanel.Controls.Add(this.WindLabel);
             this.WindPanel.Location = new System.Drawing.Point(320, 0);
+            this.WindPanel.Margin = new System.Windows.Forms.Padding(0);
             this.WindPanel.Name = "WindPanel";
             this.WindPanel.Size = new System.Drawing.Size(320, 170);
             this.WindPanel.TabIndex = 1;
@@ -369,36 +403,18 @@ namespace Boater
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
             // 
-            // TemperatureAdditionalLabel
+            // NorthLabel
             // 
-            this.TemperatureAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TemperatureAdditionalLabel.Location = new System.Drawing.Point(195, 85);
-            this.TemperatureAdditionalLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.TemperatureAdditionalLabel.Name = "TemperatureAdditionalLabel";
-            this.TemperatureAdditionalLabel.Size = new System.Drawing.Size(120, 60);
-            this.TemperatureAdditionalLabel.TabIndex = 2;
-            this.TemperatureAdditionalLabel.Text = "-- ° F";
-            this.TemperatureAdditionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TemperatureAdditionalImage
-            // 
-            this.TemperatureAdditionalImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureAdditionalImage.Image")));
-            this.TemperatureAdditionalImage.Location = new System.Drawing.Point(130, 85);
-            this.TemperatureAdditionalImage.Name = "TemperatureAdditionalImage";
-            this.TemperatureAdditionalImage.Size = new System.Drawing.Size(60, 60);
-            this.TemperatureAdditionalImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.TemperatureAdditionalImage.TabIndex = 3;
-            this.TemperatureAdditionalImage.TabStop = false;
-            // 
-            // TemperatureImage
-            // 
-            this.TemperatureImage.Image = ((System.Drawing.Image)(resources.GetObject("TemperatureImage.Image")));
-            this.TemperatureImage.Location = new System.Drawing.Point(130, 25);
-            this.TemperatureImage.Name = "TemperatureImage";
-            this.TemperatureImage.Size = new System.Drawing.Size(60, 60);
-            this.TemperatureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.TemperatureImage.TabIndex = 4;
-            this.TemperatureImage.TabStop = false;
+            this.NorthLabel.BackColor = System.Drawing.Color.Transparent;
+            this.NorthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NorthLabel.ForeColor = System.Drawing.Color.Red;
+            this.NorthLabel.Location = new System.Drawing.Point(53, 0);
+            this.NorthLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.NorthLabel.Name = "NorthLabel";
+            this.NorthLabel.Size = new System.Drawing.Size(24, 24);
+            this.NorthLabel.TabIndex = 3;
+            this.NorthLabel.Text = "N";
+            this.NorthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -416,6 +432,8 @@ namespace Boater
             this.ReadingsPanel.ResumeLayout(false);
             this.TemperaturePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TemperatureStatusImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TemperatureAdditionalImage)).EndInit();
             this.WindPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.WindImage)).EndInit();
             this.WavePanel.ResumeLayout(false);
@@ -425,8 +443,6 @@ namespace Boater
             this.LeftPanel.ResumeLayout(false);
             this.LeftPanel.PerformLayout();
             this.RightPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureAdditionalImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TemperatureImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -462,6 +478,7 @@ namespace Boater
         private System.Windows.Forms.PictureBox TemperatureAdditionalImage;
         private System.Windows.Forms.Label TemperatureAdditionalLabel;
         private System.Windows.Forms.PictureBox TemperatureImage;
+        private System.Windows.Forms.Label NorthLabel;
     }
 }
 

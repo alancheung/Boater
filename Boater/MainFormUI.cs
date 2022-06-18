@@ -1,11 +1,20 @@
-﻿using Boater.Models;
+﻿using Boater.Common;
+using Boater.Models;
 using System;
+using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Boater
 {
     public partial class MainForm
     {
+        private const string TemperatureFormat = "{0}\u00B0 F";
+        private const string WindFormat = "{0} knots\n{1}\u00B0";
+        private const string WaveFormat = "{0} feet\n{1} Dominant Period";
+        private const string ForecastFormat = "{0}\n{1}";
+
         private void UpdateUI()
         {
             MainPanel.Visible = State.IsMainPanel;
@@ -19,20 +28,44 @@ namespace Boater
             UpdateUI();
         }
 
-
-        private async void SetActiveArea(BoatingArea area)
+        private async Task SetActiveArea(BoatingArea area)
         {
             if (area != null)
             {
-                State.ActiveArea = area;
+                SetLoading(area.Title);
 
-                NOAA.GetLatestData(State.ActiveArea);
-                await OWM.UpdateWeather(State.ActiveArea);
+                State.ActiveArea = area;
+                await Task.WhenAll(NOAA.UpdateLatestStationData(State.ActiveArea), OWM.UpdateWeather(State.ActiveArea));
                 AreaChanged(State.ActiveArea);
             }
             else
             {
                 Console.WriteLine($"New area selection was null! Did not set a new area!");
+            }
+        }
+
+        private string NoDataString(string format, int numArgs)
+        {
+            switch (numArgs)
+            {
+                case 0:
+                    return format;
+                case 1:
+                    return string.Format(format, "--");
+                case 2:
+                    return string.Format(format, "--", "--");
+                case 3:
+                    return string.Format(format, "--", "--", "--");
+                case 4:
+                    return string.Format(format, "--", "--", "--", "--");
+                case 5:
+                    return string.Format(format, "--", "--", "--", "--", "--");
+                case 6:
+                    return string.Format(format, "--", "--", "--", "--", "--", "--");
+                case 7:
+                    return string.Format(format, "--", "--", "--", "--", "--", "--", "--");
+                default:
+                    return format;
             }
         }
 
@@ -43,42 +76,55 @@ namespace Boater
             double? temp = area.StationData.FirstOrDefault(d => d.AirTemperature.HasValue)?.AirTemperature;
             if (temp.HasValue)
             {
-                TemperatureLabel.Text = $"{temp}\u00B0 F";
+                TemperatureLabel.Text = string.Format(TemperatureFormat, temp);
             }
             else
             {
-                TemperatureLabel.Text = "No data...";
+                TemperatureLabel.Text = NoDataString(TemperatureFormat, 1);
             }
 
             double? waterTemp = area.StationData.FirstOrDefault(d => d.WaterTemperature.HasValue)?.WaterTemperature;
             if (waterTemp.HasValue)
             {
-                TemperatureAdditionalLabel.Text = $"{waterTemp}\u00B0 F";
+                TemperatureAdditionalLabel.Text = string.Format(TemperatureFormat, waterTemp);
             }
             else
             {
-                TemperatureAdditionalLabel.Text = "No data...";
+                TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat, 1);
             }
 
             double? windSpeed = area.StationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
+            int? windDirection = area.StationData.FirstOrDefault(d => d.WindAngle.HasValue)?.WindAngle;
             if (windSpeed.HasValue)
             {
-                WindLabel.Text = $"Wind\n{windSpeed}";
+                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString() ?? "--", windDirection.ToString() ?? "--");
+                WindImage.Image = WinFormExtensions.RotateImage(Image.FromFile("C:\\Users\\Alan\\Desktop\\CodeLibrary\\VisualStudio\\Boater\\Boater\\Content\\Flaticon\\wind-scaled-north.png"), windDirection.Value);
             }
             else
             {
-                WindLabel.Text = "No data...";
+                WindLabel.Text = NoDataString(WindFormat, 2);
             }
 
             double? waveHeight = area.StationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
+            double? wavePeriod = area.StationData.FirstOrDefault(d => d.DominantWavePeriod.HasValue)?.DominantWavePeriod;
             if (waveHeight.HasValue)
             {
-                WaveLabel.Text = $"Wave Height\n{waveHeight}";
+                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString() ?? "--", wavePeriod.ToString() ?? "--");
             }
             else
             {
-                WaveLabel.Text = "No data...";
+                WaveLabel.Text = NoDataString(WaveFormat, 2);
             }
+        }
+
+        private void SetLoading(string title)
+        {
+            StationLabel.Text = $"Loading {title}...";
+            TemperatureLabel.Text = NoDataString(TemperatureFormat, 1);
+            TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat, 1);
+            WindLabel.Text = NoDataString(WindFormat, 2);
+            WaveLabel.Text = NoDataString(WaveFormat, 2);
+            ForecastLabel.Text = NoDataString(ForecastFormat, 2);
         }
     }
 }
