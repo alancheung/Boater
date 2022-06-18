@@ -3,6 +3,7 @@ using Boater.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Boater
@@ -11,10 +12,6 @@ namespace Boater
     {
         private static readonly string DateTimeOffsetFormat = $"MM/dd/yyyy{Environment.NewLine}hh:mm:ss";
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>The object is readonly but the fields in the object are not.</remarks>
         private readonly ViewModel State;
 
         private readonly OpenWeatherMapClient OWM;
@@ -47,7 +44,7 @@ namespace Boater
 
             if (!string.IsNullOrWhiteSpace(initialAreaTitle))
             {
-                SetActiveArea(boatingAreas.SingleOrDefault(a => a.Title == initialAreaTitle));
+                SetActiveArea(boatingAreas.SingleOrDefault(a => a.Title == initialAreaTitle)).Wait();
             }
         }
 
@@ -61,7 +58,7 @@ namespace Boater
             SwapAndUpdatePanels();
         }
 
-        private void AreaButton_Click(object sender, EventArgs e)
+        private async void AreaButton_Click(object sender, EventArgs e)
         {
             if (sender is Button)
             {
@@ -81,8 +78,8 @@ namespace Boater
                     newArea = BoatingAreas.ElementAtOrDefault(2);
                 }
 
-                SetActiveArea(newArea);
                 SwapAndUpdatePanels();
+                await SetActiveArea(newArea);
             }
             else
             {

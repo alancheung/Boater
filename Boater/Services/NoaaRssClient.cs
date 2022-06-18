@@ -1,7 +1,9 @@
 ﻿using Boater.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.ServiceModel.Syndication;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Boater.Services
@@ -20,7 +22,28 @@ namespace Boater.Services
         /// </summary>
         /// <param name="area">The <see cref="BoatingArea"/> to update</param>
         /// <returns>True if <see cref="BoatingArea.StationData"/> collection updated, false otherwise</returns>
-        public bool GetLatestData(BoatingArea area)
+        public async Task<bool> UpdateLatestStationData(BoatingArea area)
+        {
+            // Get the data from the source
+            Task<Tuple<bool, List<StationSource>>> task = Task.Run(() => GetLatestStationData(area));
+            await task;
+
+            // Parse it into the area object.
+            Tuple<bool, List<StationSource>> result = task.Result;
+            bool success = result.Item1;
+
+            // Only update if successful so that the cached data is always viewable at least.
+            if (success)
+            {
+                area.StationData.Clear();
+                area.StationData.AddRange(result.Item2);
+            }
+
+            return success;
+
+        }
+
+        private Tuple<bool, List<StationSource>> GetLatestStationData(BoatingArea area)
         {
             // Read out to only hit dependent property once.
             DateTimeOffset lastUpdateTime = area.LastUpdateTime;
@@ -28,7 +51,7 @@ namespace Boater.Services
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
                 Console.WriteLine($"No update required. Last update for area {area.Title} was {lastUpdateTime}");
-                return false;
+                return Tuple.Create(false, (List<StationSource>)null);
             }
 
             SyndicationFeed feed = null;
@@ -43,13 +66,12 @@ namespace Boater.Services
             {
                 Console.WriteLine($"EXCEPTION: {area.Title} encountered an error reading XML data from NOAA at {DateTimeOffset.Now}.{Environment.NewLine}" +
                     $"{ex}");
-                return false;
+                return Tuple.Create(false, (List<StationSource>)null);
             }
 
             try
             {
-                // Small amount of total data so probably faster to clear than re-init
-                area.StationData.Clear();
+                List<StationSource> stations = new List<StationSource>();
                 foreach (SyndicationItem item in feed.Items)
                 {
                     StationSource source = new StationSource(item.Title.Text);
@@ -59,16 +81,16 @@ namespace Boater.Services
                     {
                         break;
                     }
-                    area.StationData.Add(source);
+                    stations.Add(source);
                 }
 
-                return true;
+                return Tuple.Create(true, stations);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"EXCEPTION: {area.Title} encountered an error parsing RSS data at {DateTimeOffset.Now}.{Environment.NewLine}" +
                     $"{ex}");
-                return false;
+                return Tuple.Create(false, (List<StationSource>)null);
             }
         }
     }
