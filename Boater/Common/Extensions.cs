@@ -32,6 +32,7 @@ namespace Boater.Common
             Graphics g = control.CreateGraphics();
             Font originalFont = control.Font;
             int width = control.Width;
+            int height = control.Height;
 
             Font updatedFont = null;
             // We utilize MeasureString which we get via a control instance           
@@ -42,7 +43,7 @@ namespace Boater.Common
                 // Test the string with the new size
                 SizeF adjustedSizeNew = g.MeasureString(text, updatedFont);
 
-                if (width > Convert.ToInt32(adjustedSizeNew.Width))
+                if (width > Convert.ToInt32(adjustedSizeNew.Width) && height > Convert.ToInt32(adjustedSizeNew.Height))
                 {
                     break;
                 }
