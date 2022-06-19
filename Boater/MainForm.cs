@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeatherNet.Model;
 
 namespace Boater
 {
     public partial class MainForm : Form
     {
-        private static readonly string DateTimeOffsetFormat = $"MM/dd/yyyy{Environment.NewLine}hh:mm:ss";
+        private static readonly string DateTimeOffsetFormat = $"MM/dd/yyyy{Environment.NewLine}HH:mm:ss";
 
         private readonly ViewModel State;
 
@@ -26,6 +27,8 @@ namespace Boater
         private readonly string OpenWeatherContentPath;
 
         private readonly TimeSpan MaxMinsBeforeUpdateRequired;
+
+        private readonly int PeriodicUpdateTimeMs;
 
         public MainForm()
         {
@@ -42,6 +45,7 @@ namespace Boater
         /// <param name="flaticonPath">The path to the icons used for the UI</param>
         /// <param name="openweatherPath">The path to the icons used for the openweather weather icons</param>
         /// <param name="maxMinsBeforeUpdateRequired">The maximum amount of time before an update is required</param>
+        /// <param name="periodicUpdateTime">Time between periodic updates</param>
         /// <param name="initialAreaTitle">The initial selection from <paramref name="boatingAreas"/></param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
         public MainForm(ViewModel initialModel, 
@@ -50,7 +54,8 @@ namespace Boater
             IReadOnlyCollection<BoatingArea> boatingAreas, 
             string flaticonPath, 
             string openweatherPath,
-            TimeSpan maxMinsBeforeUpdateRequired,
+            TimeSpan maxMinsBeforeUpdateRequired, 
+            int periodicUpdateTime,
             string initialAreaTitle = null) : this()
         {
             State = initialModel;
@@ -63,6 +68,9 @@ namespace Boater
             OpenWeatherContentPath = openweatherPath;
 
             MaxMinsBeforeUpdateRequired = maxMinsBeforeUpdateRequired;
+            PeriodicUpdateTimeMs = periodicUpdateTime;
+            PeriodicUpdateTimer.Interval = periodicUpdateTime;
+            PeriodicUpdateTimer.Start();
 
             if (!string.IsNullOrWhiteSpace(initialAreaTitle))
             {
@@ -70,9 +78,49 @@ namespace Boater
             }
         }
 
+        /// <summary>
+        /// Only update the datetime shown to user
+        /// </summary>
+        /// <param name="sender">The UI timer</param>
+        /// <param name="e">Empty argument</param>
         private void DateTimeTimer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Text = DateTimeOffset.Now.ToString(DateTimeOffsetFormat);
+
+        }
+
+        /// <summary>
+        /// Background timer to check if any information needs to be retrieved.
+        /// </summary>
+        /// <param name="sender">The UI timer</param>
+        /// <param name="e">Empty argument</param>
+        private async void PeriodicUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            if (State.ActiveArea != null)
+            {
+                // Update all data if ready to update
+                DateTimeOffset oldestUpdate = State.ActiveArea.OldestUpdate;
+                TimeSpan timeSinceLastUpdate = DateTimeOffset.Now - oldestUpdate;
+
+                if (timeSinceLastUpdate > MaxMinsBeforeUpdateRequired)
+                {
+                    await SetActiveArea(State.ActiveArea);
+                }
+                // Setup text if not already showing an error
+                else if (OtherLabel.ForeColor != Color.Red)
+                {
+                    SetLastUpdateText(oldestUpdate);
+                }
+
+                if ((DateTimeOffset.Now - State.LastForecastChangeTime).TotalMilliseconds > PeriodicUpdateTimeMs)
+                {
+                    // OpenWeatherMap only returns a maximum of 5 days
+                    State.ForecastDaysOut = (State.ForecastDaysOut + 1) % 5;
+                    State.LastForecastChangeTime = DateTimeOffset.Now;
+
+                    UpdateForecastData(State.ActiveArea.ForecastResult, State.ForecastDaysOut);
+                }
+            }
         }
 
         private void ChooseButton_Click(object sender, EventArgs e)

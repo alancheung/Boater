@@ -105,7 +105,6 @@ namespace Boater
             }
             catch (Exception ex)
             {
-                StationLabel.Text += " (STALE)";
                 OtherLabel.Text = $"{DateTimeOffset.Now.ToString("HH:mm:ss")} Update FAILED! Exception: {ex.Message}";
                 OtherLabel.ForeColor = Color.Red;
             }
@@ -115,6 +114,16 @@ namespace Boater
         {
             // string.Format requires at least the number of elements with no upper limit
             return string.Format(format, "--", "--", "--", "--", "--", "--", "--", "--");
+        }
+
+        private void SetLastUpdateText(DateTimeOffset oldestUpdate)
+        {
+            // Setup text if not already showing an error
+            if (OtherLabel.ForeColor != Color.Red)
+            {
+                DateTimeOffset nextUpdate = DateTimeOffset.Now + (MaxMinsBeforeUpdateRequired - (DateTimeOffset.Now - oldestUpdate));
+                OtherLabel.Text = $"Last Update: {oldestUpdate.ToString("HH:mm:ss")}. Next update at {nextUpdate.ToString("HH:mm:ss")}";
+            }
         }
 
         private void AreaChanged(BoatingArea area, bool noaaUpdateSuccess, bool noaaTextUpdateSuccess, bool weatherSuccess, bool forecastSuccess)
@@ -138,8 +147,11 @@ namespace Boater
 
             if (forecastSuccess)
             {
-                UpdateForecastData(area.ForecastResult, 1);
+                State.ForecastDaysOut = 1;
+                UpdateForecastData(area.ForecastResult, State.ForecastDaysOut);
             }
+
+            SetLastUpdateText(area.OldestUpdate);
         }
 
         private void UpdateNoaaData(List<StationSource> stationData)
@@ -249,12 +261,12 @@ namespace Boater
                 }
                 else
                 {
-                    ForecastLabel.SetText(NoDataString(ForecastFormat));
+                    ForecastLabel.Text = string.Format(ForecastFormat, DateTimeOffset.Now.AddDays(days).ToString("ddd MM/dd"), "--", "--", "--", "--");
                 }
             }
             else
             {
-                ForecastLabel.Text = NoDataString(ForecastFormat);
+                ForecastLabel.Text = string.Format(ForecastFormat, DateTimeOffset.Now.AddDays(days).ToString("ddd MM/dd"), "--", "--", "--", "--");
             }
         }
 

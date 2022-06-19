@@ -44,6 +44,7 @@ namespace Boater
             }
 
             TimeSpan maxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings["MaxMinsBeforeUpdateRequired"]));
+            int periodicUpdateTime = int.Parse(ConfigurationManager.AppSettings["PeriodicMs"]);
 
             OpenWeatherMapClient ollieWilliams = new OpenWeatherMapClient(
                 apiKey: openWeatherMapAPIKey,
@@ -71,6 +72,7 @@ namespace Boater
                 flaticonPath: flatIconContentPath,
                 openweatherPath: openWeatherMapContentPath,
                 maxMinsBeforeUpdateRequired: maxMinsBeforeUpdateRequired,
+                periodicUpdateTime: periodicUpdateTime,
                 initialAreaTitle: defaultBoatingAreaTitle);
             Application.Run(form);
         }
