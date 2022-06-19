@@ -56,12 +56,25 @@ namespace Boater.Models
         /// </summary>
         [JsonIgnore]
         public DateTimeOffset LastStationUpdateTime { get; set; }
+
+        /// <summary>
+        /// The text update from the NOAA ANZ areas.
+        /// </summary>
+        [JsonIgnore]
+        public string TextUpdate { get; set; }
+
+        /// <summary>
+        /// The last time <see cref="TextUpdate"/> was updated.
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset LastTextUpdateTime { get; set; }
         #endregion
 
         #region OpenWeatherMap Data
         /// <summary>
         /// The cached results of the weather update.
         /// </summary>
+        [JsonIgnore]
         public CurrentWeatherResult WeatherResult;
 
         /// <summary>
@@ -73,6 +86,7 @@ namespace Boater.Models
         /// <summary>
         /// The cached results of the weather forecast grouped by day
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> ForecastResult;
 
         /// <summary>

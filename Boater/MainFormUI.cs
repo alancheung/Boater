@@ -50,6 +50,7 @@ namespace Boater
         private void SetLoading(string title)
         {
             StationLabel.Text = $"Loading {title}...";
+            StationLabel.ForeColor = Color.Black;
             TemperatureLabel.Text = NoDataString(TemperatureFormat);
             TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat);
             WindLabel.Text = NoDataString(WindFormat);
@@ -58,6 +59,8 @@ namespace Boater
             WaveLabel.Text = NoDataString(WaveFormat);
             WavePeriodLabel.Text = NoDataString(WavePeriodFormat);
             ForecastLabel.Text = NoDataString(ForecastFormat);
+            OtherLabel.Text = string.Empty;
+            OtherLabel.ForeColor = Color.Black;
         }
 
         private async Task SetActiveArea(BoatingArea area, int timeoutMs = 30000)
@@ -70,10 +73,11 @@ namespace Boater
                     State.ActiveArea = area;
 
                     Task<bool> noaaTask = NOAA.UpdateLatestStationData(State.ActiveArea);
+                    Task<bool> textTask = NOAA.UpdateLatestTextData(State.ActiveArea);
                     Task<bool> weatherTask = OWM.UpdateWeather(State.ActiveArea);
                     Task<bool> forecastTask = OWM.UpdateForecast(State.ActiveArea);
 
-                    Task updateTasks = Task.WhenAll(noaaTask, weatherTask, forecastTask);
+                    Task updateTasks = Task.WhenAll(noaaTask, textTask, weatherTask, forecastTask);
                     Task<Task> running = Task.WhenAny(updateTasks, Task.Delay(timeoutMs));
                     
                     await running;
@@ -81,16 +85,17 @@ namespace Boater
                     if (running.Result != updateTasks)
                     {
                         // If all updates failed then call the task failed, otherwise update what we can
-                        if (!noaaTask.IsCompleted && !weatherTask.IsCompleted && !forecastTask.IsCompleted)
+                        if (!noaaTask.IsCompleted && !textTask.IsCompleted && !weatherTask.IsCompleted && !forecastTask.IsCompleted)
                         {
                             throw new TimeoutException($"Updating tasks did not finish within {timeoutMs / 1000} seconds. Showing stale data...");
                         }
                     }
 
                     // Trickery here to only attempt to get the result if the task is completed. Otherwise waiting for the result causes it to hang.
-                    AreaChanged(State.ActiveArea, 
-                        noaaUpdateSuccess: noaaTask.IsCompleted && noaaTask.Result, 
-                        weatherSuccess: weatherTask.IsCompleted && weatherTask.Result, 
+                    AreaChanged(State.ActiveArea,
+                        noaaUpdateSuccess: noaaTask.IsCompleted && noaaTask.Result,
+                        noaaTextUpdateSuccess: textTask.IsCompleted && textTask.Result,
+                        weatherSuccess: weatherTask.IsCompleted && weatherTask.Result,
                         forecastSuccess: forecastTask.IsCompleted && forecastTask.Result);
                 }
                 else
@@ -100,7 +105,7 @@ namespace Boater
             }
             catch (Exception ex)
             {
-                StationLabel.Text = $"{area.Title} (STALE)";
+                StationLabel.Text += " (STALE)";
                 OtherLabel.Text = $"{DateTimeOffset.Now.ToString("HH:mm:ss")} Update FAILED! Exception: {ex.Message}";
                 OtherLabel.ForeColor = Color.Red;
             }
@@ -112,13 +117,18 @@ namespace Boater
             return string.Format(format, "--", "--", "--", "--", "--", "--", "--", "--");
         }
 
-        private void AreaChanged(BoatingArea area, bool noaaUpdateSuccess, bool weatherSuccess, bool forecastSuccess)
+        private void AreaChanged(BoatingArea area, bool noaaUpdateSuccess, bool noaaTextUpdateSuccess, bool weatherSuccess, bool forecastSuccess)
         {
             StationLabel.Text = area.Title;
             
             if (noaaUpdateSuccess)
             {
                 UpdateNoaaData(area.StationData);
+            }
+
+            if (noaaTextUpdateSuccess)
+            {
+                UpdateNoaaTextUpdate(area.TextUpdate);
             }
 
             if (weatherSuccess)
@@ -184,6 +194,18 @@ namespace Boater
             else
             {
                 WaveLabel.Text = NoDataString(WaveFormat);
+            }
+        }
+
+        private void UpdateNoaaTextUpdate(string textUpdate)
+        {
+            UpdateTextBox.Text = textUpdate;
+
+            if (textUpdate.Contains("SMALL CRAFT ADVISORY IN EFFECT"))
+            {
+                string text = StationLabel.Text + "\nSMALL CRAFT ADVISORY";
+                StationLabel.SetText(text);
+                StationLabel.ForeColor = Color.Red;
             }
         }
 
