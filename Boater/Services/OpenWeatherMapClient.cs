@@ -82,6 +82,9 @@ namespace Boater.Services
                 if (result.Success && result.Item != null)
                 {
                     result.Item.Date = TimeZone.CurrentTimeZone.ToLocalTime(result.Item.Date);
+                    result.Item.Temp = Math.Round(result.Item.Temp, 0);
+                    result.Item.TempMax = Math.Round(result.Item.TempMax, 0);
+                    result.Item.TempMin = Math.Round(result.Item.TempMin, 0);
                 }
                 else
                 {
@@ -137,7 +140,13 @@ namespace Boater.Services
 
                 if (result.Success && result.Items?.Any() == true)
                 {
-                    result.Items.ForEach(r => r.Date = TimeZone.CurrentTimeZone.ToLocalTime(r.Date));
+                    foreach (FiveDaysForecastResult f in result.Items)
+                    {
+                        f.Date = TimeZone.CurrentTimeZone.ToLocalTime(f.Date);
+                        f.Temp = Math.Round(f.Temp, 0);
+                        f.TempMax = Math.Round(f.TempMax, 0);
+                        f.TempMin = Math.Round(f.TempMin, 0);
+                    }
                 }
                 else
                 {
