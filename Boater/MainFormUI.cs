@@ -1,19 +1,25 @@
 ﻿using Boater.Common;
 using Boater.Models;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WeatherNet.Model;
 
 namespace Boater
 {
     public partial class MainForm
     {
         private const string TemperatureFormat = "{0}\u00B0 F";
-        private const string WindFormat = "{0} knots\n{1}\u00B0";
+        private const string WindFormat = "{0} knots";
+        private const string WindDirectionFormat = "{0}\u00B0";
         private const string WaveFormat = "{0} feet\n{1} Dominant Period";
         private const string ForecastFormat = "{0}\n{1}";
+
+        private const string WindImageName = "wind-scaled-north.png";
 
         private void UpdateUI()
         {
@@ -28,103 +34,158 @@ namespace Boater
             UpdateUI();
         }
 
-        private async Task SetActiveArea(BoatingArea area)
+        private void SetLoading(string title)
         {
-            if (area != null)
-            {
-                SetLoading(area.Title);
+            StationLabel.Text = $"Loading {title}...";
+            TemperatureLabel.Text = NoDataString(TemperatureFormat);
+            TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat);
+            WindLabel.Text = NoDataString(WindFormat);
+            WindAddtionalLabel.Text = NoDataString(WindDirectionFormat);
+            WaveLabel.Text = NoDataString(WaveFormat);
+            ForecastLabel.Text = NoDataString(ForecastFormat);
+        }
 
-                State.ActiveArea = area;
-                await Task.WhenAll(NOAA.UpdateLatestStationData(State.ActiveArea), OWM.UpdateWeather(State.ActiveArea));
-                AreaChanged(State.ActiveArea);
-            }
-            else
+        private async Task SetActiveArea(BoatingArea area, int timeoutMs = 30000)
+        {
+            try
             {
-                Console.WriteLine($"New area selection was null! Did not set a new area!");
+                if (area != null)
+                {
+                    SetLoading(area.Title);
+                    State.ActiveArea = area;
+
+                    Task<bool> noaaTask = NOAA.UpdateLatestStationData(State.ActiveArea);
+                    Task<bool> weatherTask = OWM.UpdateWeather(State.ActiveArea);
+                    Task<bool> forecastTask = OWM.UpdateForecast(State.ActiveArea);
+
+                    Task updateTasks = Task.WhenAll(noaaTask, weatherTask, forecastTask);
+                    Task<Task> running = Task.WhenAny(updateTasks, Task.Delay(timeoutMs));
+                    
+                    await running;
+                    
+                    if (running.Result != updateTasks)
+                    {
+                        throw new TimeoutException($"Updating tasks did not finish within {timeoutMs / 1000} seconds. Showing stale data...");
+                    }
+
+                    AreaChanged(State.ActiveArea, noaaUpdateSuccess: noaaTask.Result, weatherSuccess: weatherTask.Result, forecastSuccess: forecastTask.Result);
+                }
+                else
+                {
+                    Console.WriteLine($"New area selection was null! Did not set a new area!");
+                }
+            }
+            catch (Exception ex)
+            {
+                StationLabel.Text = $"{area.Title} ({DateTimeOffset.Now.ToString("HH:mm:ss")} Update FAILED)";
+                OtherLabel.Text = $"Update failed! Exception: {ex.Message}";
+                OtherLabel.ForeColor = Color.Red;
             }
         }
 
-        private string NoDataString(string format, int numArgs)
+        private string NoDataString(string format)
         {
-            switch (numArgs)
-            {
-                case 0:
-                    return format;
-                case 1:
-                    return string.Format(format, "--");
-                case 2:
-                    return string.Format(format, "--", "--");
-                case 3:
-                    return string.Format(format, "--", "--", "--");
-                case 4:
-                    return string.Format(format, "--", "--", "--", "--");
-                case 5:
-                    return string.Format(format, "--", "--", "--", "--", "--");
-                case 6:
-                    return string.Format(format, "--", "--", "--", "--", "--", "--");
-                case 7:
-                    return string.Format(format, "--", "--", "--", "--", "--", "--", "--");
-                default:
-                    return format;
-            }
+            // string.Format requires at least the number of elements with no upper limit
+            return string.Format(format, "--", "--", "--", "--", "--", "--", "--", "--");
         }
 
-        private void AreaChanged(BoatingArea area)
+        private void AreaChanged(BoatingArea area, bool noaaUpdateSuccess, bool weatherSuccess, bool forecastSuccess)
         {
             StationLabel.Text = area.Title;
-
-            double? temp = area.StationData.FirstOrDefault(d => d.AirTemperature.HasValue)?.AirTemperature;
-            if (temp.HasValue)
+            
+            if (noaaUpdateSuccess)
             {
-                TemperatureLabel.Text = string.Format(TemperatureFormat, temp);
-            }
-            else
-            {
-                TemperatureLabel.Text = NoDataString(TemperatureFormat, 1);
+                UpdateNoaaData(area.StationData);
             }
 
-            double? waterTemp = area.StationData.FirstOrDefault(d => d.WaterTemperature.HasValue)?.WaterTemperature;
+            if (weatherSuccess)
+            {
+                UpdateOpenWeatherData(area.WeatherResult);
+            }
+
+            if (forecastSuccess)
+            {
+                UpdateForecastData(area.ForecastResult);
+            }
+        }
+
+        private void UpdateNoaaData(List<StationSource> stationData)
+        {
+            double? waterTemp = stationData.FirstOrDefault(d => d.WaterTemperature.HasValue)?.WaterTemperature;
             if (waterTemp.HasValue)
             {
                 TemperatureAdditionalLabel.Text = string.Format(TemperatureFormat, waterTemp);
             }
             else
             {
-                TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat, 1);
+                TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat);
             }
 
-            double? windSpeed = area.StationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
-            int? windDirection = area.StationData.FirstOrDefault(d => d.WindAngle.HasValue)?.WindAngle;
+            double? windSpeed = stationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
+            int? windDirection = stationData.FirstOrDefault(d => d.WindAngle.HasValue)?.WindAngle;
             if (windSpeed.HasValue)
             {
-                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString() ?? "--", windDirection.ToString() ?? "--");
-                WindImage.Image = WinFormExtensions.RotateImage(Image.FromFile("C:\\Users\\Alan\\Desktop\\CodeLibrary\\VisualStudio\\Boater\\Boater\\Content\\Flaticon\\wind-scaled-north.png"), windDirection.Value);
+                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString(), windDirection.ToString());
+                SetWindDirection(windDirection);
             }
             else
             {
-                WindLabel.Text = NoDataString(WindFormat, 2);
+                WindLabel.Text = NoDataString(WindFormat);
             }
 
-            double? waveHeight = area.StationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
-            double? wavePeriod = area.StationData.FirstOrDefault(d => d.DominantWavePeriod.HasValue)?.DominantWavePeriod;
+            double? waveHeight = stationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
+            double? wavePeriod = stationData.FirstOrDefault(d => d.DominantWavePeriod.HasValue)?.DominantWavePeriod;
             if (waveHeight.HasValue)
             {
-                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString() ?? "--", wavePeriod.ToString() ?? "--");
+                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString(), wavePeriod.ToString());
             }
             else
             {
-                WaveLabel.Text = NoDataString(WaveFormat, 2);
+                WaveLabel.Text = NoDataString(WaveFormat);
             }
         }
 
-        private void SetLoading(string title)
+        private void UpdateOpenWeatherData(CurrentWeatherResult weatherResult)
         {
-            StationLabel.Text = $"Loading {title}...";
-            TemperatureLabel.Text = NoDataString(TemperatureFormat, 1);
-            TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat, 1);
-            WindLabel.Text = NoDataString(WindFormat, 2);
-            WaveLabel.Text = NoDataString(WaveFormat, 2);
-            ForecastLabel.Text = NoDataString(ForecastFormat, 2);
+            TemperatureLabel.Text = string.Format(TemperatureFormat, weatherResult.Temp);
+        }
+        private void UpdateForecastData(List<FiveDaysForecastResult> forecastResult)
+        {
+            FiveDaysForecastResult tomorrow = forecastResult.FirstOrDefault();
+            if (tomorrow != null)
+            {
+                string description = tomorrow.Description;
+                double high = tomorrow.TempMax;
+                double low = tomorrow.TempMin;
+            }
+            else
+            {
+                ForecastLabel.Text = NoDataString(ForecastFormat);
+            }
+        }
+
+        private void SetForecastImage(string icon)
+        {
+            string iconPath = Path.Combine(OpenWeatherContentPath, icon);
+            iconPath = Path.ChangeExtension(iconPath, "png");
+
+            ForecastImage.ImageLocation = iconPath;
+        }
+
+        private void SetWindDirection(int? angle)
+        {
+            if (angle.HasValue)
+            {
+                WindAddtionalLabel.Text = string.Empty;
+            }
+
+            // Sometimes north is displayed as 360 so make it pretty.
+            angle = angle % 360;
+
+            string iconPath = Path.Combine(FlatIconPath, WindImageName);
+
+            WindImage.Image = WinFormExtensions.RotateImage(Image.FromFile(iconPath), angle.Value);
+            WindAddtionalLabel.Text = string.Format(WindDirectionFormat, angle);
         }
     }
 }

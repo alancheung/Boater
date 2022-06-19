@@ -2,6 +2,7 @@
 using Boater.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,10 @@ namespace Boater
 
         private readonly IReadOnlyCollection<BoatingArea> BoatingAreas;
 
+        private readonly string FlatIconPath;
+
+        private readonly string OpenWeatherContentPath;
+
         public MainForm()
         {
             InitializeComponent();
@@ -32,15 +37,26 @@ namespace Boater
         /// <param name="weatherSource">A helper preconstructed to retrieve data from OpenWeatherMap</param>
         /// <param name="noaaSource">A helper preconstructed to retrieve data from NOAA</param>
         /// <param name="boatingAreas">A list of selectable <see cref="BoatingArea"/></param>
-        /// <param name="initialArea">The initial selection from <paramref name="boatingAreas"/></param>
+        /// <param name="flaticonPath">The path to the icons used for the UI</param>
+        /// <param name="openweatherPath">The path to the icons used for the openweather weather icons</param>
+        /// <param name="initialAreaTitle">The initial selection from <paramref name="boatingAreas"/></param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
-        public MainForm(ViewModel initialModel, OpenWeatherMapClient weatherSource, NoaaRssClient noaaSource, IReadOnlyCollection<BoatingArea> boatingAreas, string initialAreaTitle = null) : this()
+        public MainForm(ViewModel initialModel, 
+            OpenWeatherMapClient weatherSource, 
+            NoaaRssClient noaaSource, 
+            IReadOnlyCollection<BoatingArea> boatingAreas, 
+            string flaticonPath, 
+            string openweatherPath, 
+            string initialAreaTitle = null) : this()
         {
             State = initialModel;
             OWM = weatherSource;
             NOAA = noaaSource;
             BoatingAreas = boatingAreas;
             UpdateUI();
+
+            FlatIconPath = flaticonPath;
+            OpenWeatherContentPath = openweatherPath;
 
             if (!string.IsNullOrWhiteSpace(initialAreaTitle))
             {

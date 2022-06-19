@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WeatherNet.Clients;
 using WeatherNet.Model;
@@ -38,13 +39,6 @@ namespace Boater.Services
             OpenWeatherMapContentFolderPath = contentPath;
             MaxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings[nameof(MaxMinsBeforeUpdateRequired)]));
             UseRealWeather = useRealWeather;
-        }
-
-        public static string GetImage(WeatherResult result)
-        {
-            string icon = Path.Combine(OpenWeatherMapContentFolderPath, result.Icon);
-            icon = Path.ChangeExtension(icon, "png");
-            return icon;
         }
 
         /// <summary>
@@ -83,19 +77,9 @@ namespace Boater.Services
             try
             {
                 SingleResult<CurrentWeatherResult> result;
-                if (UseRealWeather)
-                {
-                    result = CurrentWeather.GetByCoordinates(lat: latitude, lon: longitude, "en", "imperial");
-                }
-                else
-                {
-                    string debugWeatherFilePath = Path.Combine(OpenWeatherMapContentFolderPath, "fakeWeather.json");
-                    string fakeWeatherJson = File.ReadAllText(debugWeatherFilePath);
-                    result = JsonConvert.DeserializeObject<SingleResult<CurrentWeatherResult>>(fakeWeatherJson);
-                    Console.WriteLine("Faked weather results!");
-                }
+                result = CurrentWeather.GetByCoordinates(lat: latitude, lon: longitude, "en", "imperial");
 
-                if (result.Success)
+                if (result.Success && result.Item != null)
                 {
                     result.Item.Date = TimeZone.CurrentTimeZone.ToLocalTime(result.Item.Date);
                 }
@@ -149,29 +133,18 @@ namespace Boater.Services
             try
             {
                 Result<FiveDaysForecastResult> result;
-                if (UseRealWeather)
-                {
-                    result = FiveDaysForecast.GetByCoordinates(lat: latitude, lon: longitude, "en", "imperial");
-                }
-                else
-                {
-                    string debugWeatherFilePath = Path.Combine(OpenWeatherMapContentFolderPath, "fakeWeather.json");
-                    string fakeWeatherJson = File.ReadAllText(debugWeatherFilePath);
-                    result = JsonConvert.DeserializeObject<Result<FiveDaysForecastResult>>(fakeWeatherJson);
-                    Console.WriteLine("Faked weather results!");
-                }
+                result = FiveDaysForecast.GetByCoordinates(lat: latitude, lon: longitude, "en", "imperial");
 
-                if (result.Success)
+                if (result.Success && result.Items?.Any() == true)
                 {
                     result.Items.ForEach(r => r.Date = TimeZone.CurrentTimeZone.ToLocalTime(r.Date));
-                    return Tuple.Create(true, result.Items);
                 }
                 else
                 {
                     Console.WriteLine($"Weather update failed with message: {result.Message}");
-                    return Tuple.Create(false, result.Items);
                 }
 
+                return Tuple.Create(result.Success, result.Items);
             }
             catch (Exception ex)
             {

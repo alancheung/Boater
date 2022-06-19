@@ -30,6 +30,9 @@ namespace Boater
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            string flatIconContentPath = ConfigurationManager.AppSettings["FlatIconContentPath"];
+            string openWeatherMapContentPath = ConfigurationManager.AppSettings["OpenWeatherMapContentPath"];
+
             string openWeatherMapAPIKey = ConfigurationManager.AppSettings["OpenWeatherMapAPIKey"];
             if (string.IsNullOrWhiteSpace(openWeatherMapAPIKey))
             {
@@ -39,13 +42,8 @@ namespace Boater
                 }
                 openWeatherMapAPIKey = SecretKeys.OpenWeatherMapAPIKey;
             }
-            string openWeatherMapContentPath = ConfigurationManager.AppSettings["OpenWeatherMapContentPath"];
             OpenWeatherMapClient ollieWilliams = new OpenWeatherMapClient(apiKey: openWeatherMapAPIKey, contentPath: openWeatherMapContentPath, useRealWeather: RELEASE);
 
-                ViewModel initialModel = new ViewModel()
-            {
-                IsMainPanel = true
-            };
             NoaaRssClient noaaFeed = new NoaaRssClient();
 
             string boatingAreaConfigPath = ConfigurationManager.AppSettings["BoatingAreaConfigPath"];
@@ -55,7 +53,20 @@ namespace Boater
 
             string defaultBoatingAreaTitle = ConfigurationManager.AppSettings["DefaultBoatingAreaTitle"];
 
-            Application.Run(new MainForm(initialModel, ollieWilliams, noaaFeed, boatingAreas, defaultBoatingAreaTitle));
+            ViewModel initialModel = new ViewModel()
+            {
+                IsMainPanel = true
+            };
+
+            MainForm form = new MainForm(
+                initialModel: initialModel, 
+                weatherSource: ollieWilliams,
+                noaaSource: noaaFeed, 
+                boatingAreas: boatingAreas,
+                flaticonPath: flatIconContentPath,
+                openweatherPath: openWeatherMapContentPath,
+                initialAreaTitle: defaultBoatingAreaTitle);
+            Application.Run(form);
         }
     }
 }

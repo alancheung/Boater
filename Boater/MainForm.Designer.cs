@@ -46,6 +46,7 @@ namespace Boater
             this.TemperatureAdditionalImage = new System.Windows.Forms.PictureBox();
             this.TemperatureAdditionalLabel = new System.Windows.Forms.Label();
             this.WindPanel = new System.Windows.Forms.Panel();
+            this.WindAddtionalLabel = new System.Windows.Forms.Label();
             this.NorthLabel = new System.Windows.Forms.Label();
             this.WindImage = new System.Windows.Forms.PictureBox();
             this.WindLabel = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.WindAddtionalLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
@@ -256,6 +256,16 @@ namespace Boater
             this.WindPanel.Size = new System.Drawing.Size(320, 170);
             this.WindPanel.TabIndex = 1;
             // 
+            // WindAddtionalLabel
+            // 
+            this.WindAddtionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindAddtionalLabel.Location = new System.Drawing.Point(35, 145);
+            this.WindAddtionalLabel.Name = "WindAddtionalLabel";
+            this.WindAddtionalLabel.Size = new System.Drawing.Size(60, 24);
+            this.WindAddtionalLabel.TabIndex = 4;
+            this.WindAddtionalLabel.Text = "--- °";
+            this.WindAddtionalLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // NorthLabel
             // 
             this.NorthLabel.BackColor = System.Drawing.Color.Transparent;
@@ -288,7 +298,7 @@ namespace Boater
             this.WindLabel.Name = "WindLabel";
             this.WindLabel.Size = new System.Drawing.Size(192, 170);
             this.WindLabel.TabIndex = 1;
-            this.WindLabel.Text = "Wind Speed\r\nDirection";
+            this.WindLabel.Text = "-- knots";
             this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // WavePanel
@@ -417,16 +427,6 @@ namespace Boater
             this.DateTimeTimer.Enabled = true;
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
-            // 
-            // WindAddtionalLabel
-            // 
-            this.WindAddtionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindAddtionalLabel.Location = new System.Drawing.Point(35, 148);
-            this.WindAddtionalLabel.Name = "WindAddtionalLabel";
-            this.WindAddtionalLabel.Size = new System.Drawing.Size(60, 24);
-            this.WindAddtionalLabel.TabIndex = 4;
-            this.WindAddtionalLabel.Text = "--- °";
-            this.WindAddtionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
