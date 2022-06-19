@@ -41,6 +41,18 @@ namespace Boater.Models
         /// The maximum distance from the station to still allow results.
         /// </summary>
         public int MaxRange { get; set; }
+
+        /// <summary>
+        /// The earliest time any data in ActiveArea was updated
+        /// </summary>
+        [JsonIgnore]
+        public DateTimeOffset OldestUpdate => new DateTimeOffset[4]
+        {
+            LastForecastUpdateTime,
+            LastStationUpdateTime,
+            LastTextUpdateTime,
+            LastWeatherUpdateTime
+        }.Min();
         #endregion
 
         #region NOAA Data
@@ -55,7 +67,7 @@ namespace Boater.Models
         /// The last time a reading in the <see cref="StationData"/> collection was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastStationUpdateTime { get; set; }
+        public DateTimeOffset LastStationUpdateTime { get; set; } = DateTimeOffset.MinValue;
 
         /// <summary>
         /// The text update from the NOAA ANZ areas.
@@ -67,7 +79,7 @@ namespace Boater.Models
         /// The last time <see cref="TextUpdate"/> was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastTextUpdateTime { get; set; }
+        public DateTimeOffset LastTextUpdateTime { get; set; } = DateTimeOffset.MinValue;
         #endregion
 
         #region OpenWeatherMap Data
@@ -81,7 +93,7 @@ namespace Boater.Models
         /// The last time <see cref="WeatherResult"/> was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastWeatherUpdateTime { get; set; }
+        public DateTimeOffset LastWeatherUpdateTime { get; set; } = DateTimeOffset.MinValue;
 
         /// <summary>
         /// The cached results of the weather forecast grouped by day
@@ -93,7 +105,7 @@ namespace Boater.Models
         /// The last time <see cref="ForecastResult"/> was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastForecastUpdateTime { get; set; }
+        public DateTimeOffset LastForecastUpdateTime { get; set; } = DateTimeOffset.MinValue;
         #endregion
     }
 }

@@ -8,7 +8,6 @@ namespace Boater.Models
     /// </summary>
     public class ViewModel
     {
-        #region MainPanelControls
         /// <summary>
         /// Is the main panel (with the readings) being displayed?
         /// </summary>
@@ -26,21 +25,13 @@ namespace Boater.Models
         {
             IsMainPanel = !IsMainPanel;
         }
-        #endregion
-
-        #region AreaControls
         public BoatingArea ActiveArea { get; set; }
 
         /// <summary>
-        /// The earliest time any data in ActiveArea was updated
+        /// The number of days from today to show the forecast.
         /// </summary>
-        public DateTimeOffset OldestUpdate => new DateTimeOffset[4] 
-        { 
-            ActiveArea.LastForecastUpdateTime, 
-            ActiveArea.LastStationUpdateTime, 
-            ActiveArea.LastTextUpdateTime, 
-            ActiveArea.LastWeatherUpdateTime 
-        }.Min();
-        #endregion
+        public int ForecastDaysOut = 0;
+
+        public DateTimeOffset LastForecastChangeTime = DateTimeOffset.MinValue;
     }
 }
