@@ -101,7 +101,7 @@ namespace Boater.Services
         /// <returns>Was the update successful</returns>
         public async Task<bool> UpdateForecast(BoatingArea area)
         {
-            if (area.LastForecastResult > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
+            if (area.LastForecastUpdateTime > DateTimeOffset.Now - MaxMinsBeforeUpdateRequired)
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
                 Console.WriteLine($"No forecast update required. Last update for area {area.Title} was {area.LastWeatherUpdateTime}");
@@ -122,7 +122,7 @@ namespace Boater.Services
                 IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> grouping = result.Item2.GroupBy(f => f.Date.Date);
 
                 area.ForecastResult = grouping;
-                area.LastForecastResult = DateTimeOffset.Now;
+                area.LastForecastUpdateTime = DateTimeOffset.Now;
             }
 
             return success;

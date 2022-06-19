@@ -93,7 +93,7 @@ namespace Boater.Models
         /// The last time <see cref="ForecastResult"/> was updated.
         /// </summary>
         [JsonIgnore]
-        public DateTimeOffset LastForecastResult { get; set; }
+        public DateTimeOffset LastForecastUpdateTime { get; set; }
         #endregion
     }
 }

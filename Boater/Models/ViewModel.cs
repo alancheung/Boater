@@ -1,4 +1,7 @@
-﻿namespace Boater.Models
+﻿using System;
+using System.Linq;
+
+namespace Boater.Models
 {
     /// <summary>
     /// A representation of the UI state and any objects required for the UI.
@@ -27,6 +30,17 @@
 
         #region AreaControls
         public BoatingArea ActiveArea { get; set; }
+
+        /// <summary>
+        /// The earliest time any data in ActiveArea was updated
+        /// </summary>
+        public DateTimeOffset OldestUpdate => new DateTimeOffset[4] 
+        { 
+            ActiveArea.LastForecastUpdateTime, 
+            ActiveArea.LastStationUpdateTime, 
+            ActiveArea.LastTextUpdateTime, 
+            ActiveArea.LastWeatherUpdateTime 
+        }.Min();
         #endregion
     }
 }
