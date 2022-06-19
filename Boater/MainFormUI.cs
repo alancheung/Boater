@@ -17,7 +17,7 @@ namespace Boater
         private const string WindFormat = "{0} knots";
         private const string WindDirectionFormat = "{0}\u00B0";
         private const string WaveFormat = "{0} feet\n{1} Dominant Period";
-        private const string ForecastFormat = "{0}\n{1}";
+        private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F\n{3}\u00B0 F";
 
         private const string WindImageName = "wind-scaled-north.png";
 
@@ -65,10 +65,18 @@ namespace Boater
                     
                     if (running.Result != updateTasks)
                     {
-                        throw new TimeoutException($"Updating tasks did not finish within {timeoutMs / 1000} seconds. Showing stale data...");
+                        // If all updates failed then call the task failed, otherwise update what we can
+                        if (!noaaTask.IsCompleted && !weatherTask.IsCompleted && !forecastTask.IsCompleted)
+                        {
+                            throw new TimeoutException($"Updating tasks did not finish within {timeoutMs / 1000} seconds. Showing stale data...");
+                        }
                     }
 
-                    AreaChanged(State.ActiveArea, noaaUpdateSuccess: noaaTask.Result, weatherSuccess: weatherTask.Result, forecastSuccess: forecastTask.Result);
+                    // Trickery here to only attempt to get the result if the task is completed. Otherwise waiting for the result causes it to hang.
+                    AreaChanged(State.ActiveArea, 
+                        noaaUpdateSuccess: noaaTask.IsCompleted && noaaTask.Result, 
+                        weatherSuccess: weatherTask.IsCompleted && weatherTask.Result, 
+                        forecastSuccess: forecastTask.IsCompleted && forecastTask.Result);
                 }
                 else
                 {
@@ -77,8 +85,8 @@ namespace Boater
             }
             catch (Exception ex)
             {
-                StationLabel.Text = $"{area.Title} ({DateTimeOffset.Now.ToString("HH:mm:ss")} Update FAILED)";
-                OtherLabel.Text = $"Update failed! Exception: {ex.Message}";
+                StationLabel.Text = $"{area.Title} (STALE)";
+                OtherLabel.Text = $"{DateTimeOffset.Now.ToString("HH:mm:ss")} Update FAILED! Exception: {ex.Message}";
                 OtherLabel.ForeColor = Color.Red;
             }
         }
@@ -151,12 +159,17 @@ namespace Boater
         }
         private void UpdateForecastData(List<FiveDaysForecastResult> forecastResult)
         {
-            FiveDaysForecastResult tomorrow = forecastResult.FirstOrDefault();
+            var group = forecastResult.GroupBy(f => f.Date.Date);
+            List<FiveDaysForecastResult> tomorrow = group.FirstOrDefault(kv => kv.Key.Date == DateTimeOffset.Now.AddDays(1).Date).ToList();
             if (tomorrow != null)
             {
-                string description = tomorrow.Description;
-                double high = tomorrow.TempMax;
-                double low = tomorrow.TempMin;
+                string date = tomorrow.First().Title;
+                string description = tomorrow.First().Description;
+                double high = tomorrow.Max(t => t.TempMax);
+                double low = tomorrow.Min(t => t.TempMin);
+
+                ForecastLabel.Text = string.Format(ForecastFormat, date, description, high, low);
+                SetForecastImage(tomorrow.First().Icon);
             }
             else
             {
