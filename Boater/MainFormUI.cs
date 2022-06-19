@@ -18,7 +18,8 @@ namespace Boater
         private const string WindFormat = "{0} knots";
         private const string WindDirectionFormat = "{0}\u00B0";
         private const string WindGustFormat = "Gust: {0} knots";
-        private const string WaveFormat = "{0} feet\n{1} Dominant Period";
+        private const string WaveFormat = "{0} feet";
+        private const string WavePeriodFormat = "Every {0} seconds";
         private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F / {3}\u00B0 F\n{4}%";
 
         private const string WindImageName = "wind-scaled-north.png";
@@ -55,6 +56,7 @@ namespace Boater
             WindDirectionLabel.Text = NoDataString(WindDirectionFormat);
             WindAdditionalLabel.Text = NoDataString(WindGustFormat);
             WaveLabel.Text = NoDataString(WaveFormat);
+            WavePeriodLabel.Text = NoDataString(WavePeriodFormat);
             ForecastLabel.Text = NoDataString(ForecastFormat);
         }
 
@@ -150,26 +152,34 @@ namespace Boater
             {
                 WindLabel.Text = string.Format(WindFormat, windSpeed.ToString());
                 SetWindDirection(windAngle, windDirection);
+
+                if (windGust.HasValue)
+                {
+                    WindAdditionalLabel.Text = string.Format(WindGustFormat, windGust.ToString());
+                }
+                else
+                {
+                    WindAdditionalLabel.Text = string.Empty;
+                }
             }
             else
             {
                 WindLabel.Text = NoDataString(WindFormat);
             }
 
-            if (windGust.HasValue)
-            {
-                WindAdditionalLabel.Text = string.Format(WindGustFormat, windGust.ToString());
-            }
-            else
-            {
-                WindAdditionalLabel.Text = string.Empty;
-            }
-
             double? waveHeight = stationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
             double? wavePeriod = stationData.FirstOrDefault(d => d.DominantWavePeriod.HasValue)?.DominantWavePeriod;
             if (waveHeight.HasValue)
             {
-                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString(), wavePeriod.ToString());
+                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString());
+                if (wavePeriod.HasValue)
+                {
+                    WavePeriodLabel.Text = string.Format(WavePeriodFormat, wavePeriod.ToString());
+                }
+                else
+                {
+                    WavePeriodLabel.Text = string.Empty;
+                }
             }
             else
             {

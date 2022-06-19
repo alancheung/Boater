@@ -63,6 +63,7 @@ namespace Boater
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
             this.WindAdditionalLabel = new System.Windows.Forms.Label();
+            this.WavePeriodLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
@@ -298,7 +299,7 @@ namespace Boater
             this.WindLabel.Location = new System.Drawing.Point(130, 25);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
-            this.WindLabel.Size = new System.Drawing.Size(185, 60);
+            this.WindLabel.Size = new System.Drawing.Size(185, 90);
             this.WindLabel.TabIndex = 1;
             this.WindLabel.Text = "-- knots";
             this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -308,6 +309,7 @@ namespace Boater
             this.WavePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.WavePanel.Controls.Add(this.WaveImage);
             this.WavePanel.Controls.Add(this.WaveLabel);
+            this.WavePanel.Controls.Add(this.WavePeriodLabel);
             this.WavePanel.Location = new System.Drawing.Point(0, 170);
             this.WavePanel.Name = "WavePanel";
             this.WavePanel.Size = new System.Drawing.Size(320, 170);
@@ -327,11 +329,11 @@ namespace Boater
             // WaveLabel
             // 
             this.WaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WaveLabel.Location = new System.Drawing.Point(128, 0);
+            this.WaveLabel.Location = new System.Drawing.Point(130, 25);
             this.WaveLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WaveLabel.Name = "WaveLabel";
-            this.WaveLabel.Size = new System.Drawing.Size(192, 170);
-            this.WaveLabel.TabIndex = 2;
+            this.WaveLabel.Size = new System.Drawing.Size(185, 90);
+            this.WaveLabel.TabIndex = 1;
             this.WaveLabel.Text = "Wave Height";
             this.WaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -433,13 +435,24 @@ namespace Boater
             // WindAdditionalLabel
             // 
             this.WindAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindAdditionalLabel.Location = new System.Drawing.Point(130, 85);
+            this.WindAdditionalLabel.Location = new System.Drawing.Point(130, 115);
             this.WindAdditionalLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindAdditionalLabel.Name = "WindAdditionalLabel";
-            this.WindAdditionalLabel.Size = new System.Drawing.Size(185, 60);
+            this.WindAdditionalLabel.Size = new System.Drawing.Size(185, 30);
             this.WindAdditionalLabel.TabIndex = 5;
             this.WindAdditionalLabel.Text = "Gust: -- knots";
             this.WindAdditionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // WavePeriodLabel
+            // 
+            this.WavePeriodLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WavePeriodLabel.Location = new System.Drawing.Point(130, 115);
+            this.WavePeriodLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.WavePeriodLabel.Name = "WavePeriodLabel";
+            this.WavePeriodLabel.Size = new System.Drawing.Size(185, 30);
+            this.WavePeriodLabel.TabIndex = 2;
+            this.WavePeriodLabel.Text = "Every -- seconds";
+            this.WavePeriodLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -506,6 +519,7 @@ namespace Boater
         private System.Windows.Forms.Label NorthLabel;
         private System.Windows.Forms.Label WindDirectionLabel;
         private System.Windows.Forms.Label WindAdditionalLabel;
+        private System.Windows.Forms.Label WavePeriodLabel;
     }
 }
 
