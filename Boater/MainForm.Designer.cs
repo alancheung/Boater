@@ -358,11 +358,11 @@ namespace Boater
             // 
             // ForecastLabel
             // 
-            this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForecastLabel.Location = new System.Drawing.Point(128, 0);
+            this.ForecastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForecastLabel.Location = new System.Drawing.Point(128, 25);
             this.ForecastLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ForecastLabel.Name = "ForecastLabel";
-            this.ForecastLabel.Size = new System.Drawing.Size(192, 170);
+            this.ForecastLabel.Size = new System.Drawing.Size(192, 120);
             this.ForecastLabel.TabIndex = 3;
             this.ForecastLabel.Text = "Forecast";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

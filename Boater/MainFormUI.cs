@@ -22,6 +22,16 @@ namespace Boater
         private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F / {3}\u00B0 F\n{4}%";
 
         private const string WindImageName = "wind-scaled-north.png";
+        private Dictionary<string, int> WeatherTitleRanking = new Dictionary<string, int>()
+        {
+            { "Clear",  0 },
+            { "Clouds",  1 },
+            { "Drizzle",  2 },
+            { "Rain",  3 },
+            { "Thunderstorm",  4 },
+            { "Snow",  5 },
+            { "Atmosphere",  6 },
+        };
 
         private void UpdateUI()
         {
@@ -116,7 +126,7 @@ namespace Boater
 
             if (forecastSuccess)
             {
-                UpdateForecastData(area.ForecastResult);
+                UpdateForecastData(area.ForecastResult, 1);
             }
         }
 
@@ -176,20 +186,39 @@ namespace Boater
                 WindLabel.Text = string.Format(WindFormat, weatherResult.WindSpeed);
             }
         }
-        private void UpdateForecastData(List<FiveDaysForecastResult> forecastResult)
+        private void UpdateForecastData(IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> forecastResult, int days)
         {
-            IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> group = forecastResult.GroupBy(f => f.Date.Date);
-            List<FiveDaysForecastResult> tomorrow = group.FirstOrDefault(kv => kv.Key.Date == DateTimeOffset.Now.AddDays(1).Date).ToList();
-            if (tomorrow != null)
-            {
-                string date = tomorrow.First().Title;
-                string description = tomorrow.First().Description;
-                double high = tomorrow.Max(t => t.TempMax);
-                double low = tomorrow.Min(t => t.TempMin);
-                double humidity = tomorrow.Average(t => t.Humidity);
+            List<FiveDaysForecastResult> forecast = forecastResult
+                .FirstOrDefault(kv => kv.Key.Date == DateTimeOffset.Now.AddDays(days).Date)
+                .ToList();
 
-                ForecastLabel.SetText(string.Format(ForecastFormat, date, description, high, low));
-                SetForecastImage(tomorrow.First().Icon);
+            if (forecast != null && forecast.Any())
+            {
+                FiveDaysForecastResult worst = null;
+                // Will there be anything other than clear or clouds tomorrow?
+                worst = forecast.FirstOrDefault(f => WeatherTitleRanking[f.Title] >= 2);
+                if (worst == null)
+                {
+                    // No bad weather, just get the weather at 8AM
+                    worst = forecast.FirstOrDefault(f => f.Date.Hour > 8);
+                }
+
+                if (worst != null)
+                {
+                    string date = worst.Date.ToString("ddd MM/dd");
+                    string title = worst.Title;
+
+                    double high = forecast.Max(t => t.TempMax);
+                    double low = forecast.Min(t => t.TempMin);
+                    double humidity = forecast.Average(t => t.Humidity);
+
+                    ForecastLabel.SetText(string.Format(ForecastFormat, date, title, high, low, humidity));
+                    SetForecastImage(worst.Icon);
+                }
+                else
+                {
+                    ForecastLabel.SetText(NoDataString(ForecastFormat));
+                }
             }
             else
             {

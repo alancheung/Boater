@@ -124,7 +124,9 @@ namespace Boater.Services
             // Only update if successful so that the cached data is always viewable at least.
             if (success && result.Item2 != null && result.Item2.Any())
             {
-                area.ForecastResult = result.Item2;
+                IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> grouping = result.Item2.GroupBy(f => f.Date.Date);
+
+                area.ForecastResult = grouping;
                 area.LastForecastResult = DateTimeOffset.Now;
             }
 

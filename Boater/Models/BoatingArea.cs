@@ -71,9 +71,9 @@ namespace Boater.Models
         public DateTimeOffset LastWeatherUpdateTime { get; set; }
 
         /// <summary>
-        /// The cached results of the weather forecast.
+        /// The cached results of the weather forecast grouped by day
         /// </summary>
-        public List<FiveDaysForecastResult> ForecastResult;
+        public IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> ForecastResult;
 
         /// <summary>
         /// The last time <see cref="ForecastResult"/> was updated.
