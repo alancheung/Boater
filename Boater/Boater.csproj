@@ -123,7 +123,9 @@
     <Content Include="Content\Flaticon\water.png" />
     <Content Include="Content\Flaticon\wave-scaled.png" />
     <Content Include="Content\Flaticon\wave.png" />
-    <Content Include="Content\Flaticon\wind-scaled-north.png" />
+    <Content Include="Content\Flaticon\wind-scaled-north.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Flaticon\wind-scaled.png" />
     <Content Include="Content\Flaticon\wind.png" />
     <Content Include="Content\OpenWeatherMap\01d.png">
