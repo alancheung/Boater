@@ -277,12 +277,11 @@ namespace Boater
             // Sometimes north is displayed as 360 so make it pretty.
             angle %= 360;
             
-            string text = string.Format(WindDirectionFormat, angle);
             if (!string.IsNullOrWhiteSpace(direction))
             {
-                text += $"({direction})";
+                WindLabel.Text += $"\n{direction}";
             }
-            WindDirectionLabel.Text = text;
+            WindDirectionLabel.Text = string.Format(WindDirectionFormat, angle);
 
             string iconPath = Path.Combine(FlatIconPath, WindImageName);
             WindImage.Image = WinFormExtensions.RotateImage(Image.FromFile(iconPath), angle.Value);
