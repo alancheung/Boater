@@ -37,6 +37,7 @@ namespace Boater
         private static readonly Color OkColor = Color.MediumSeaGreen;
         private static readonly Color WarningColor = Color.Orange;
         private static readonly Color AlertColor = Color.Red;
+        private static readonly Color DefaultColor = SystemColors.ControlDark;
 
         private void UpdateUI()
         {
@@ -65,6 +66,11 @@ namespace Boater
             ForecastLabel.Text = NoDataString(ForecastFormat);
             OtherLabel.Text = string.Empty;
             OtherLabel.ForeColor = Color.Black;
+
+            TemperatureStatusImage.BackColor = DefaultColor;
+            WindImage.BackColor = DefaultColor;
+            WaveImage.BackColor = DefaultColor;
+            ForecastImage.BackColor = DefaultColor;
         }
 
         private async Task SetActiveArea(BoatingArea area, int timeoutMs = 30000)
@@ -262,7 +268,7 @@ namespace Boater
 
                     double high = forecast.Max(t => t.TempMax);
                     double low = forecast.Min(t => t.TempMin);
-                    double humidity = forecast.Average(t => t.Humidity);
+                    double humidity = Math.Round(forecast.Average(t => t.Humidity), 0);
 
                     ForecastLabel.SetText(string.Format(ForecastFormat, date, title, high, low, humidity));
                     SetForecastImage(worst.Icon);
