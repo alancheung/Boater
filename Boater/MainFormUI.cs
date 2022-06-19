@@ -19,7 +19,7 @@ namespace Boater
         private const string WindDirectionFormat = "{0}\u00B0";
         private const string WindGustFormat = "Gust: {0} knots";
         private const string WaveFormat = "{0} feet\n{1} Dominant Period";
-        private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F\n{3}\u00B0 F";
+        private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F / {3}\u00B0 F\n{4}%";
 
         private const string WindImageName = "wind-scaled-north.png";
 
@@ -152,7 +152,7 @@ namespace Boater
             }
             else
             {
-                WindAdditionalLabel.Text = string.Empty
+                WindAdditionalLabel.Text = string.Empty;
             }
 
             double? waveHeight = stationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
@@ -170,10 +170,15 @@ namespace Boater
         private void UpdateOpenWeatherData(CurrentWeatherResult weatherResult)
         {
             TemperatureLabel.Text = string.Format(TemperatureFormat, weatherResult.Temp);
+
+            if (WindLabel.Text == NoDataString(WindFormat))
+            {
+                WindLabel.Text = string.Format(WindFormat, weatherResult.WindSpeed);
+            }
         }
         private void UpdateForecastData(List<FiveDaysForecastResult> forecastResult)
         {
-            var group = forecastResult.GroupBy(f => f.Date.Date);
+            IEnumerable<IGrouping<DateTime, FiveDaysForecastResult>> group = forecastResult.GroupBy(f => f.Date.Date);
             List<FiveDaysForecastResult> tomorrow = group.FirstOrDefault(kv => kv.Key.Date == DateTimeOffset.Now.AddDays(1).Date).ToList();
             if (tomorrow != null)
             {
@@ -181,6 +186,7 @@ namespace Boater
                 string description = tomorrow.First().Description;
                 double high = tomorrow.Max(t => t.TempMax);
                 double low = tomorrow.Min(t => t.TempMin);
+                double humidity = tomorrow.Average(t => t.Humidity);
 
                 ForecastLabel.SetText(string.Format(ForecastFormat, date, description, high, low));
                 SetForecastImage(tomorrow.First().Icon);
