@@ -46,6 +46,7 @@ namespace Boater
             this.TemperatureAdditionalImage = new System.Windows.Forms.PictureBox();
             this.TemperatureAdditionalLabel = new System.Windows.Forms.Label();
             this.WindPanel = new System.Windows.Forms.Panel();
+            this.NorthLabel = new System.Windows.Forms.Label();
             this.WindImage = new System.Windows.Forms.PictureBox();
             this.WindLabel = new System.Windows.Forms.Label();
             this.WavePanel = new System.Windows.Forms.Panel();
@@ -60,7 +61,7 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.NorthLabel = new System.Windows.Forms.Label();
+            this.WindAddtionalLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
@@ -245,6 +246,7 @@ namespace Boater
             // WindPanel
             // 
             this.WindPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.WindPanel.Controls.Add(this.WindAddtionalLabel);
             this.WindPanel.Controls.Add(this.NorthLabel);
             this.WindPanel.Controls.Add(this.WindImage);
             this.WindPanel.Controls.Add(this.WindLabel);
@@ -253,6 +255,19 @@ namespace Boater
             this.WindPanel.Name = "WindPanel";
             this.WindPanel.Size = new System.Drawing.Size(320, 170);
             this.WindPanel.TabIndex = 1;
+            // 
+            // NorthLabel
+            // 
+            this.NorthLabel.BackColor = System.Drawing.Color.Transparent;
+            this.NorthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NorthLabel.ForeColor = System.Drawing.Color.Red;
+            this.NorthLabel.Location = new System.Drawing.Point(53, 0);
+            this.NorthLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.NorthLabel.Name = "NorthLabel";
+            this.NorthLabel.Size = new System.Drawing.Size(24, 24);
+            this.NorthLabel.TabIndex = 3;
+            this.NorthLabel.Text = "N";
+            this.NorthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // WindImage
             // 
@@ -403,18 +418,15 @@ namespace Boater
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
             // 
-            // NorthLabel
+            // WindAddtionalLabel
             // 
-            this.NorthLabel.BackColor = System.Drawing.Color.Transparent;
-            this.NorthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NorthLabel.ForeColor = System.Drawing.Color.Red;
-            this.NorthLabel.Location = new System.Drawing.Point(53, 0);
-            this.NorthLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.NorthLabel.Name = "NorthLabel";
-            this.NorthLabel.Size = new System.Drawing.Size(24, 24);
-            this.NorthLabel.TabIndex = 3;
-            this.NorthLabel.Text = "N";
-            this.NorthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.WindAddtionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindAddtionalLabel.Location = new System.Drawing.Point(35, 148);
+            this.WindAddtionalLabel.Name = "WindAddtionalLabel";
+            this.WindAddtionalLabel.Size = new System.Drawing.Size(60, 24);
+            this.WindAddtionalLabel.TabIndex = 4;
+            this.WindAddtionalLabel.Text = "--- °";
+            this.WindAddtionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -479,6 +491,7 @@ namespace Boater
         private System.Windows.Forms.Label TemperatureAdditionalLabel;
         private System.Windows.Forms.PictureBox TemperatureImage;
         private System.Windows.Forms.Label NorthLabel;
+        private System.Windows.Forms.Label WindAddtionalLabel;
     }
 }
 
