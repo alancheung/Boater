@@ -34,6 +34,10 @@ namespace Boater
             { "Atmosphere",  6 },
         };
 
+        private static readonly Color OkColor = Color.MediumSeaGreen;
+        private static readonly Color WarningColor = Color.Orange;
+        private static readonly Color AlertColor = Color.Red;
+
         private void UpdateUI()
         {
             MainPanel.Visible = State.IsMainPanel;
@@ -172,12 +176,13 @@ namespace Boater
             string windDirection= stationData.FirstOrDefault(d => !string.IsNullOrWhiteSpace(d.WindDirection))?.WindDirection;
             if (windSpeed.HasValue)
             {
-                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString());
+                WindLabel.Text = string.Format(WindFormat, windSpeed);
                 SetWindDirection(windAngle, windDirection);
+                SetWindImageAlert(windSpeed.Value, windGust);
 
                 if (windGust.HasValue)
                 {
-                    WindAdditionalLabel.Text = string.Format(WindGustFormat, windGust.ToString());
+                    WindAdditionalLabel.Text = string.Format(WindGustFormat, windGust);
                 }
                 else
                 {
@@ -194,6 +199,8 @@ namespace Boater
             if (waveHeight.HasValue)
             {
                 WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString());
+                SetWaveImageAlert(waveHeight.Value, wavePeriod);
+
                 if (wavePeriod.HasValue)
                 {
                     WavePeriodLabel.Text = string.Format(WavePeriodFormat, wavePeriod.ToString());
@@ -224,6 +231,7 @@ namespace Boater
         private void UpdateOpenWeatherData(CurrentWeatherResult weatherResult)
         {
             TemperatureLabel.Text = string.Format(TemperatureFormat, weatherResult.Temp);
+            SetTemperatureImageAlert(weatherResult.Temp);
 
             if (WindLabel.Text == NoDataString(WindFormat))
             {
@@ -240,7 +248,7 @@ namespace Boater
             {
                 FiveDaysForecastResult worst = null;
                 // Will there be anything other than clear or clouds tomorrow?
-                worst = forecast.FirstOrDefault(f => WeatherTitleRanking[f.Title] >= 2);
+                worst = forecast.FirstOrDefault(f => (WeatherTitleRanking.ContainsKey(f.Title) ? WeatherTitleRanking[f.Title] : 99) >= 2);
                 if (worst == null)
                 {
                     // No bad weather, just get the weather at 8AM
@@ -258,6 +266,7 @@ namespace Boater
 
                     ForecastLabel.SetText(string.Format(ForecastFormat, date, title, high, low, humidity));
                     SetForecastImage(worst.Icon);
+                    SetForecastImageAlert(title);
                 }
                 else
                 {
@@ -267,6 +276,113 @@ namespace Boater
             else
             {
                 ForecastLabel.Text = string.Format(ForecastFormat, DateTimeOffset.Now.AddDays(days).ToString("ddd MM/dd"), "--", "--", "--", "--");
+            }
+        }
+
+        public void SetTemperatureImageAlert(double temperature)
+        {
+            if (temperature < 32)
+            {
+                TemperatureStatusImage.BackColor = Color.SteelBlue;
+            }
+            else if (temperature < 50)
+            {
+                TemperatureStatusImage.BackColor = Color.LightSteelBlue;
+            }
+            else if (temperature < 80)
+            {
+                TemperatureStatusImage.BackColor = OkColor;
+            }
+            else if (temperature < 90)
+            {
+                TemperatureStatusImage.BackColor = WarningColor;
+            }
+            else
+            {
+                TemperatureStatusImage.BackColor = AlertColor;
+            }
+        }
+
+        public void SetWindImageAlert(double speed, double? gust)
+        {
+            double gustDifference = 0;
+            if (gust.HasValue && speed < gust)
+            {
+                gustDifference = gust.Value - speed;
+            }
+
+            if (speed < 7)
+            {
+                if (gustDifference < 3)
+                {
+                    WindImage.BackColor = OkColor;
+                }
+                else
+                {
+                    WindImage.BackColor = WarningColor;
+                }
+            }
+            else if (speed < 10)
+            {
+                if (gustDifference < 3)
+                {
+                    WindImage.BackColor = WarningColor;
+                }
+                else
+                {
+                    WindImage.BackColor = Color.Red;
+                }
+            }
+            else
+            {
+                WindImage.BackColor = Color.Red;
+            }
+        }
+
+        public void SetWaveImageAlert(double wave, double? p)
+        {
+            double period = p.HasValue ? p.Value : 0;
+
+            if (wave == 0)
+            {
+                WaveImage.BackColor = OkColor;
+            }
+            else if (wave < 1)
+            {
+                if (period < 5)
+                {
+                    WaveImage.BackColor = OkColor;
+                }
+                else
+                {
+                    WaveImage.BackColor = WarningColor;
+                }
+            }
+            else
+            {
+                WaveImage.BackColor = AlertColor;
+            }
+        }
+
+        public void SetForecastImageAlert(string title)
+        {
+            int rank = 99;
+            if (WeatherTitleRanking.ContainsKey(title))
+            {
+                rank = WeatherTitleRanking[title];
+            }
+
+            if (rank < 2)
+            {
+                ForecastImage.BackColor = OkColor;
+            }
+            else if (rank < 4)
+            {
+                ForecastImage.BackColor = WarningColor;
+            }
+            else
+            {
+                ForecastImage.BackColor = AlertColor;
             }
         }
 
