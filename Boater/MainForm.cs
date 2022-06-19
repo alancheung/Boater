@@ -86,7 +86,6 @@ namespace Boater
         private void DateTimeTimer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Text = DateTimeOffset.Now.ToString(DateTimeOffsetFormat);
-
         }
 
         /// <summary>
@@ -96,7 +95,7 @@ namespace Boater
         /// <param name="e">Empty argument</param>
         private async void PeriodicUpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (State.ActiveArea != null)
+            if (State.ActiveArea != null && State.IsMainPanel)
             {
                 // Update all data if ready to update
                 DateTimeOffset oldestUpdate = State.ActiveArea.OldestUpdate;
