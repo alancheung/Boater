@@ -364,7 +364,7 @@ namespace Boater
             this.ForecastLabel.Name = "ForecastLabel";
             this.ForecastLabel.Size = new System.Drawing.Size(192, 120);
             this.ForecastLabel.TabIndex = 3;
-            this.ForecastLabel.Text = "Forecast";
+            this.ForecastLabel.Text = "Sunday 06/ 12\r\nUnknown\r\n--° F / --° F\r\n--%";
             this.ForecastLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LeftPanel
