@@ -168,7 +168,7 @@ namespace Boater
                 double high = tomorrow.Max(t => t.TempMax);
                 double low = tomorrow.Min(t => t.TempMin);
 
-                ForecastLabel.Text = string.Format(ForecastFormat, date, description, high, low);
+                ForecastLabel.SetText(string.Format(ForecastFormat, date, description, high, low));
                 SetForecastImage(tomorrow.First().Icon);
             }
             else
