@@ -51,7 +51,7 @@ namespace Boater.Services
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
                 Console.WriteLine($"No weather update required. Last update for area {area.Title} was {area.LastWeatherUpdateTime}");
-                return false;
+                return true;
             }
 
             // Get the data from the source
@@ -63,7 +63,7 @@ namespace Boater.Services
             bool success = result.Item1;
 
             // Only update if successful so that the cached data is always viewable at least.
-            if (success)
+            if (success && result.Item2 != null)
             {
                 area.WeatherResult = result.Item2;
                 area.LastWeatherUpdateTime = DateTimeOffset.Now;
@@ -107,7 +107,7 @@ namespace Boater.Services
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
                 Console.WriteLine($"No forecast update required. Last update for area {area.Title} was {area.LastWeatherUpdateTime}");
-                return false;
+                return true;
             }
 
             // Get the data from the source
@@ -119,7 +119,7 @@ namespace Boater.Services
             bool success = result.Item1;
 
             // Only update if successful so that the cached data is always viewable at least.
-            if (success)
+            if (success && result.Item2 != null && result.Item2.Any())
             {
                 area.ForecastResult = result.Item2;
                 area.LastForecastResult = DateTimeOffset.Now;

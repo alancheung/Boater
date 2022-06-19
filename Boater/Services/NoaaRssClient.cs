@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
@@ -33,10 +34,11 @@ namespace Boater.Services
             bool success = result.Item1;
 
             // Only update if successful so that the cached data is always viewable at least.
-            if (success)
+            if (success && result.Item2 != null && result.Item2.Any())
             {
                 area.StationData.Clear();
                 area.StationData.AddRange(result.Item2);
+                area.LastStationUpdateTime = DateTimeOffset.Now;
             }
 
             return success;
@@ -49,7 +51,7 @@ namespace Boater.Services
             {
                 // Note this only represents data available from NOAA. We might have attempted to retrieve data within the limit but the data from NOAA was stale.
                 Console.WriteLine($"No station update required. Last update for area {area.Title} was {area.LastStationUpdateTime}");
-                return Tuple.Create(false, (List<StationSource>)null);
+                return Tuple.Create(true, (List<StationSource>)null);
             }
 
             SyndicationFeed feed = null;
