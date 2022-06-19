@@ -42,9 +42,14 @@ namespace Boater
                 }
                 openWeatherMapAPIKey = SecretKeys.OpenWeatherMapAPIKey;
             }
-            OpenWeatherMapClient ollieWilliams = new OpenWeatherMapClient(apiKey: openWeatherMapAPIKey, contentPath: openWeatherMapContentPath, useRealWeather: RELEASE);
 
-            NoaaRssClient noaaFeed = new NoaaRssClient();
+            TimeSpan maxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings["MaxMinsBeforeUpdateRequired"]));
+
+            OpenWeatherMapClient ollieWilliams = new OpenWeatherMapClient(
+                apiKey: openWeatherMapAPIKey,
+                maxMinsBeforeUpdateRequired: maxMinsBeforeUpdateRequired, 
+                useRealWeather: RELEASE);
+            NoaaRssClient noaaFeed = new NoaaRssClient(maxMinsBeforeUpdateRequired: maxMinsBeforeUpdateRequired);
 
             string boatingAreaConfigPath = ConfigurationManager.AppSettings["BoatingAreaConfigPath"];
             Console.WriteLine($"Boating area config file path: '{boatingAreaConfigPath}'");
@@ -65,6 +70,7 @@ namespace Boater
                 boatingAreas: boatingAreas,
                 flaticonPath: flatIconContentPath,
                 openweatherPath: openWeatherMapContentPath,
+                maxMinsBeforeUpdateRequired: maxMinsBeforeUpdateRequired,
                 initialAreaTitle: defaultBoatingAreaTitle);
             Application.Run(form);
         }

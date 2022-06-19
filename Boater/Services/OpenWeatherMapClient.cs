@@ -14,11 +14,6 @@ namespace Boater.Services
     public class OpenWeatherMapClient
     {
         /// <summary>
-        /// Path the assets folder for OpenWeatherMap.
-        /// </summary>
-        public static string OpenWeatherMapContentFolderPath;
-
-        /// <summary>
         /// The maximum amount of time before data should be updated.
         /// </summary>
         private readonly TimeSpan MaxMinsBeforeUpdateRequired;
@@ -32,12 +27,12 @@ namespace Boater.Services
         /// Constructor
         /// </summary>
         /// <param name="apiKey">API key for OpenWeather</param>
+        /// <param name="maxMinsBeforeUpdateRequired">The maximum amount of time before an update is required</param>
         /// <param name="useRealWeather">Use the real weather.</param>
-        public OpenWeatherMapClient(string apiKey, string contentPath, bool useRealWeather = false)
+        public OpenWeatherMapClient(string apiKey, TimeSpan maxMinsBeforeUpdateRequired, bool useRealWeather = false)
         {
             WeatherNet.ClientSettings.SetApiKey(apiKey);
-            OpenWeatherMapContentFolderPath = contentPath;
-            MaxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings[nameof(MaxMinsBeforeUpdateRequired)]));
+            MaxMinsBeforeUpdateRequired = maxMinsBeforeUpdateRequired;
             UseRealWeather = useRealWeather;
         }
 

@@ -14,9 +14,13 @@ namespace Boater.Services
     {
         private readonly TimeSpan MaxMinsBeforeUpdateRequired;
 
-        public NoaaRssClient()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="maxMinsBeforeUpdateRequired">The maximum amount of time before an update is required</param>
+        public NoaaRssClient(TimeSpan maxMinsBeforeUpdateRequired)
         {
-            MaxMinsBeforeUpdateRequired = TimeSpan.FromMinutes(int.Parse(ConfigurationManager.AppSettings[nameof(MaxMinsBeforeUpdateRequired)]));
+            MaxMinsBeforeUpdateRequired = maxMinsBeforeUpdateRequired;
         }
 
         /// <summary>

@@ -25,6 +25,8 @@ namespace Boater
 
         private readonly string OpenWeatherContentPath;
 
+        private readonly TimeSpan MaxMinsBeforeUpdateRequired;
+
         public MainForm()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace Boater
         /// <param name="boatingAreas">A list of selectable <see cref="BoatingArea"/></param>
         /// <param name="flaticonPath">The path to the icons used for the UI</param>
         /// <param name="openweatherPath">The path to the icons used for the openweather weather icons</param>
+        /// <param name="maxMinsBeforeUpdateRequired">The maximum amount of time before an update is required</param>
         /// <param name="initialAreaTitle">The initial selection from <paramref name="boatingAreas"/></param>
         /// <remarks>The this() constructor runs first then this constructor.</remarks>
         public MainForm(ViewModel initialModel, 
@@ -46,7 +49,8 @@ namespace Boater
             NoaaRssClient noaaSource, 
             IReadOnlyCollection<BoatingArea> boatingAreas, 
             string flaticonPath, 
-            string openweatherPath, 
+            string openweatherPath,
+            TimeSpan maxMinsBeforeUpdateRequired,
             string initialAreaTitle = null) : this()
         {
             State = initialModel;
@@ -57,6 +61,8 @@ namespace Boater
 
             FlatIconPath = flaticonPath;
             OpenWeatherContentPath = openweatherPath;
+
+            MaxMinsBeforeUpdateRequired = maxMinsBeforeUpdateRequired;
 
             if (!string.IsNullOrWhiteSpace(initialAreaTitle))
             {
