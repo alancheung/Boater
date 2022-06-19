@@ -46,7 +46,7 @@ namespace Boater
             this.TemperatureAdditionalImage = new System.Windows.Forms.PictureBox();
             this.TemperatureAdditionalLabel = new System.Windows.Forms.Label();
             this.WindPanel = new System.Windows.Forms.Panel();
-            this.WindAddtionalLabel = new System.Windows.Forms.Label();
+            this.WindDirectionLabel = new System.Windows.Forms.Label();
             this.NorthLabel = new System.Windows.Forms.Label();
             this.WindImage = new System.Windows.Forms.PictureBox();
             this.WindLabel = new System.Windows.Forms.Label();
@@ -62,6 +62,7 @@ namespace Boater
             this.ChooseButton = new System.Windows.Forms.Button();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.DateTimeTimer = new System.Windows.Forms.Timer(this.components);
+            this.WindAdditionalLabel = new System.Windows.Forms.Label();
             this.MapPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             this.ReadingsPanel.SuspendLayout();
@@ -246,25 +247,26 @@ namespace Boater
             // WindPanel
             // 
             this.WindPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.WindPanel.Controls.Add(this.WindAddtionalLabel);
+            this.WindPanel.Controls.Add(this.WindDirectionLabel);
             this.WindPanel.Controls.Add(this.NorthLabel);
             this.WindPanel.Controls.Add(this.WindImage);
             this.WindPanel.Controls.Add(this.WindLabel);
+            this.WindPanel.Controls.Add(this.WindAdditionalLabel);
             this.WindPanel.Location = new System.Drawing.Point(320, 0);
             this.WindPanel.Margin = new System.Windows.Forms.Padding(0);
             this.WindPanel.Name = "WindPanel";
             this.WindPanel.Size = new System.Drawing.Size(320, 170);
             this.WindPanel.TabIndex = 1;
             // 
-            // WindAddtionalLabel
+            // WindDirectionLabel
             // 
-            this.WindAddtionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindAddtionalLabel.Location = new System.Drawing.Point(35, 145);
-            this.WindAddtionalLabel.Name = "WindAddtionalLabel";
-            this.WindAddtionalLabel.Size = new System.Drawing.Size(60, 24);
-            this.WindAddtionalLabel.TabIndex = 4;
-            this.WindAddtionalLabel.Text = "--- °";
-            this.WindAddtionalLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.WindDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindDirectionLabel.Location = new System.Drawing.Point(23, 145);
+            this.WindDirectionLabel.Name = "WindDirectionLabel";
+            this.WindDirectionLabel.Size = new System.Drawing.Size(96, 24);
+            this.WindDirectionLabel.TabIndex = 4;
+            this.WindDirectionLabel.Text = "--- °";
+            this.WindDirectionLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // NorthLabel
             // 
@@ -293,10 +295,10 @@ namespace Boater
             // WindLabel
             // 
             this.WindLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WindLabel.Location = new System.Drawing.Point(128, 0);
+            this.WindLabel.Location = new System.Drawing.Point(130, 25);
             this.WindLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindLabel.Name = "WindLabel";
-            this.WindLabel.Size = new System.Drawing.Size(192, 170);
+            this.WindLabel.Size = new System.Drawing.Size(185, 60);
             this.WindLabel.TabIndex = 1;
             this.WindLabel.Text = "-- knots";
             this.WindLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -428,6 +430,17 @@ namespace Boater
             this.DateTimeTimer.Interval = 1000;
             this.DateTimeTimer.Tick += new System.EventHandler(this.DateTimeTimer_Tick);
             // 
+            // WindAdditionalLabel
+            // 
+            this.WindAdditionalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WindAdditionalLabel.Location = new System.Drawing.Point(130, 85);
+            this.WindAdditionalLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.WindAdditionalLabel.Name = "WindAdditionalLabel";
+            this.WindAdditionalLabel.Size = new System.Drawing.Size(185, 60);
+            this.WindAdditionalLabel.TabIndex = 5;
+            this.WindAdditionalLabel.Text = "Gust: -- knots";
+            this.WindAdditionalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,7 +504,8 @@ namespace Boater
         private System.Windows.Forms.Label TemperatureAdditionalLabel;
         private System.Windows.Forms.PictureBox TemperatureImage;
         private System.Windows.Forms.Label NorthLabel;
-        private System.Windows.Forms.Label WindAddtionalLabel;
+        private System.Windows.Forms.Label WindDirectionLabel;
+        private System.Windows.Forms.Label WindAdditionalLabel;
     }
 }
 

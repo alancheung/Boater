@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WeatherNet.Model;
@@ -16,6 +17,7 @@ namespace Boater
         private const string TemperatureFormat = "{0}\u00B0 F";
         private const string WindFormat = "{0} knots";
         private const string WindDirectionFormat = "{0}\u00B0";
+        private const string WindGustFormat = "Gust: {0} knots";
         private const string WaveFormat = "{0} feet\n{1} Dominant Period";
         private const string ForecastFormat = "{0}\n{1}\n{2}\u00B0 F\n{3}\u00B0 F";
 
@@ -40,7 +42,8 @@ namespace Boater
             TemperatureLabel.Text = NoDataString(TemperatureFormat);
             TemperatureAdditionalLabel.Text = NoDataString(TemperatureFormat);
             WindLabel.Text = NoDataString(WindFormat);
-            WindAddtionalLabel.Text = NoDataString(WindDirectionFormat);
+            WindDirectionLabel.Text = NoDataString(WindDirectionFormat);
+            WindAdditionalLabel.Text = NoDataString(WindGustFormat);
             WaveLabel.Text = NoDataString(WaveFormat);
             ForecastLabel.Text = NoDataString(ForecastFormat);
         }
@@ -130,15 +133,26 @@ namespace Boater
             }
 
             double? windSpeed = stationData.FirstOrDefault(d => d.WindSpeed.HasValue)?.WindSpeed;
-            int? windDirection = stationData.FirstOrDefault(d => d.WindAngle.HasValue)?.WindAngle;
+            double? windGust = stationData.FirstOrDefault(d => d.WindGust.HasValue)?.WindGust;
+            int? windAngle = stationData.FirstOrDefault(d => d.WindAngle.HasValue)?.WindAngle;
+            string windDirection= stationData.FirstOrDefault(d => !string.IsNullOrWhiteSpace(d.WindDirection))?.WindDirection;
             if (windSpeed.HasValue)
             {
-                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString(), windDirection.ToString());
-                SetWindDirection(windDirection);
+                WindLabel.Text = string.Format(WindFormat, windSpeed.ToString());
+                SetWindDirection(windAngle, windDirection);
             }
             else
             {
                 WindLabel.Text = NoDataString(WindFormat);
+            }
+
+            if (windGust.HasValue)
+            {
+                WindAdditionalLabel.Text = string.Format(WindGustFormat, windGust.ToString());
+            }
+            else
+            {
+                WindAdditionalLabel.Text = string.Empty
             }
 
             double? waveHeight = stationData.FirstOrDefault(d => d.SignificantWaveHeight.HasValue)?.SignificantWaveHeight;
@@ -185,20 +199,27 @@ namespace Boater
             ForecastImage.ImageLocation = iconPath;
         }
 
-        private void SetWindDirection(int? angle)
+        private void SetWindDirection(int? angle, string direction)
         {
-            if (angle.HasValue)
+            if (!angle.HasValue)
             {
-                WindAddtionalLabel.Text = string.Empty;
+                WindDirectionLabel.Text = string.Empty;
+                return;
             }
 
             // Sometimes north is displayed as 360 so make it pretty.
-            angle = angle % 360;
+            angle %= 360;
+            
+            string text = string.Format(WindDirectionFormat, angle);
+            if (!string.IsNullOrWhiteSpace(direction))
+            {
+                text += $"({direction})";
+            }
+            WindDirectionLabel.Text = text;
 
             string iconPath = Path.Combine(FlatIconPath, WindImageName);
-
             WindImage.Image = WinFormExtensions.RotateImage(Image.FromFile(iconPath), angle.Value);
-            WindAddtionalLabel.Text = string.Format(WindDirectionFormat, angle);
+
         }
     }
 }
