@@ -142,7 +142,7 @@ namespace Boater
             
             if (noaaUpdateSuccess)
             {
-                UpdateNoaaData(area.StationData);
+                UpdateNoaaData(area.StationData, area.HasWaveData);
             }
 
             if (noaaTextUpdateSuccess)
@@ -164,7 +164,7 @@ namespace Boater
             SetLastUpdateText(area.OldestUpdate);
         }
 
-        private void UpdateNoaaData(List<StationSource> stationData)
+        private void UpdateNoaaData(List<StationSource> stationData, bool hasWaveData)
         {
             double? waterTemp = stationData.FirstOrDefault(d => d.WaterTemperature.HasValue)?.WaterTemperature;
             if (waterTemp.HasValue)
@@ -204,19 +204,23 @@ namespace Boater
             double? wavePeriod = stationData.FirstOrDefault(d => d.DominantWavePeriod.HasValue)?.DominantWavePeriod;
             if (waveHeight.HasValue)
             {
-                WaveLabel.Text = string.Format(WaveFormat, waveHeight.ToString());
+                WaveLabel.Text = string.Format(WaveFormat, waveHeight);
                 SetWaveImageAlert(waveHeight.Value, wavePeriod);
 
                 if (wavePeriod.HasValue)
                 {
-                    WavePeriodLabel.Text = string.Format(WavePeriodFormat, wavePeriod.ToString());
+                    WavePeriodLabel.Text = string.Format(WavePeriodFormat, wavePeriod);
                 }
                 else
                 {
                     WavePeriodLabel.Text = string.Empty;
                 }
             }
-            else
+            else if (hasWaveData)
+            {
+                WaveLabel.Text = string.Format(WaveFormat, 0);
+                WavePeriodLabel.Text = string.Empty;
+            }
             {
                 WaveLabel.Text = NoDataString(WaveFormat);
             }

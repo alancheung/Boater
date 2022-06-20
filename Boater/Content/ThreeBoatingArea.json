@@ -1,11 +1,12 @@
 [
 	{
-		"Title":"Baltimore",
+		"Title": "Baltimore",
 		"RssUrl": "https://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=39.277N&lon=76.573W",
 		"Latitude": "39.277",
 		"Longitude": "-76.573",
-		"TextUrl":"https://tgftp.nws.noaa.gov/data/forecasts/marine/coastal/an/anz538.txt",
-		"MaxRange":"10"
+		"TextUrl": "https://tgftp.nws.noaa.gov/data/forecasts/marine/coastal/an/anz538.txt",
+		"MaxRange": "10",
+		"HasWaveData":  false,
 	},
 	{
 		"Title": "Sandy Point",
@@ -13,7 +14,8 @@
 		"Latitude": "39.020",
 		"Longitude": "-76.407",
 		"TextUrl": "https://tgftp.nws.noaa.gov/data/forecasts/marine/coastal/an/anz532.txt",
-		"MaxRange": "10"
+		"MaxRange": "10",
+		"HasWaveData": true
 	},
 	{
 		"Title": "North Beach",
@@ -21,6 +23,7 @@
 		"Latitude": "28.707",
 		"Longitude": "-76.531",
 		"TextUrl": "https://tgftp.nws.noaa.gov/data/forecasts/marine/coastal/an/anz533.txt",
-		"MaxRange": "15"
+		"MaxRange": "15",
+		"HasWaveData": false
 	}
 ]

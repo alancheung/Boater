@@ -43,6 +43,11 @@ namespace Boater.Models
         public int MaxRange { get; set; }
 
         /// <summary>
+        /// Denotes whether this area is expected to have wave data.
+        /// </summary>
+        public bool HasWaveData { get; set; }
+
+        /// <summary>
         /// The earliest time any data in ActiveArea was updated
         /// </summary>
         [JsonIgnore]
