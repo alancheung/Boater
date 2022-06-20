@@ -253,7 +253,7 @@ namespace Boater
         {
             List<FiveDaysForecastResult> forecast = forecastResult
                 .FirstOrDefault(kv => kv.Key.Date == DateTimeOffset.Now.AddDays(days).Date)
-                .ToList();
+                ?.ToList();
 
             if (forecast != null && forecast.Any())
             {
