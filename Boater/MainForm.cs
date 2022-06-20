@@ -71,11 +71,6 @@ namespace Boater
             PeriodicUpdateTimeMs = periodicUpdateTime;
             PeriodicUpdateTimer.Interval = periodicUpdateTime;
             PeriodicUpdateTimer.Start();
-
-            if (!string.IsNullOrWhiteSpace(initialAreaTitle))
-            {
-                SetActiveArea(boatingAreas.SingleOrDefault(a => a.Title == initialAreaTitle)).Wait();
-            }
         }
 
         /// <summary>
