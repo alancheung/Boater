@@ -221,6 +221,7 @@ namespace Boater
                 WaveLabel.Text = string.Format(WaveFormat, 0);
                 WavePeriodLabel.Text = string.Empty;
             }
+            else
             {
                 WaveLabel.Text = NoDataString(WaveFormat);
             }
