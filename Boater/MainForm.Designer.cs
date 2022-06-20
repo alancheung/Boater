@@ -470,6 +470,7 @@ namespace Boater
             this.Controls.Add(this.LeftPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.MapPanel.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
